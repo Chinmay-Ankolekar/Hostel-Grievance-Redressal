@@ -59,11 +59,13 @@ const workers = `CREATE table if not EXISTS workers (
   phone varchar(10),
   email varchar
 ); `
+
     
   await pool.query(complaint);
   await pool.query(student);
   await pool.query(warden);
   await pool.query(workers);
+ 
 }
 
 module.exports = {

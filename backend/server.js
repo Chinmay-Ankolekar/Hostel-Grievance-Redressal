@@ -2,10 +2,15 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const db = require("./db");
+const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
 const complaintRoutes = require("./routes/complaintRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const wardenRoutes = require("./routes/wardenRoutes");
 const workersRoutes = require("./routes/workersRoutes");
+
 
 app.use(cors());
 app.use(express.json());
@@ -14,6 +19,7 @@ app.use('/', complaintRoutes);
 app.use('/', studentRoutes)
 app.use('/', wardenRoutes)
 app.use('/', workersRoutes)
+
 
 
 // app.post("/complaints", async (req, res) => {

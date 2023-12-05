@@ -13,9 +13,7 @@ function jwtGenerator(user_id, type) {
 }
 
 function jwtDecoder(token){
-    jwt.verify(token, process.env.JWTSECRET, function(err, decoded) {
-        console.log(err, decoded)
-    });
+    return jwt.verify(token, process.env.JWTSECRET);
 }
 
 exports.jwtDecoder = jwtDecoder;

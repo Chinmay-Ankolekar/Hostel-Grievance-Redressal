@@ -10,6 +10,7 @@ const complaintRoutes = require("./routes/complaintRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const wardenRoutes = require("./routes/wardenRoutes");
 const workersRoutes = require("./routes/workersRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 
 app.use(cors());
@@ -19,6 +20,7 @@ app.use('/', complaintRoutes);
 app.use('/', studentRoutes)
 app.use('/', wardenRoutes)
 app.use('/', workersRoutes)
+app.use('/', userRoutes)
 
 
 

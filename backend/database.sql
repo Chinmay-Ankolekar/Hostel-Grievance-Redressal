@@ -43,3 +43,13 @@ CREATE table if not EXISTS workers (
     phone varchar(10),
     email varchar
 ); 
+
+CREATE TABLE if not exists users(
+  id serial primary key,
+  full_name VARCHAR(255) NOT NULL,
+  user_email VARCHAR(255) NOT NULL UNIQUE,
+  user_password VARCHAR(255) NOT NULL,
+  type text
+);
+
+

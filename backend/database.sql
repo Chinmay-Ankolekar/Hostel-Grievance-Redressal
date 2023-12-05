@@ -118,8 +118,3 @@ create table if not exists complaint (
     foreign key (warden_id) references warden(warden_id) on delete cascade
 );
 
-
-
-
-
-

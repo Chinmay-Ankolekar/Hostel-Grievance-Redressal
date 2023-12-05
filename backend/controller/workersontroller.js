@@ -28,7 +28,7 @@ exports.postWorkers = asyncWrapper(async(req, res) => {
     try {
         const {worker_id} = req.params;
         const workers = await db.pool.query(
-          "select * from warden where id = $1",
+          "select * from workers where worker_id = $1",
           [worker_id]
         );
         res.json(workers.rows)

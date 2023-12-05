@@ -5,6 +5,6 @@ const { postStudent, getStudentByid } = require('../controller/studentController
 
 studentRoutes.route("/student").post(postStudent);
 
-studentRoutes.route("/student/:id").get(getStudentByid);
+studentRoutes.route("/student/:student_id").get(getStudentByid);
 
 module.exports = studentRoutes

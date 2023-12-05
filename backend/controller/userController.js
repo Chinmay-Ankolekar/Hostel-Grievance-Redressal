@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 const db = require("../db");
 const bcrypt = require("bcrypt");
-const validInfo = require("../middleware/validInfo");
+// const validInfo = require("../middleware/validInfo");
 const asyncWrapper = require('express-async-handler')
 const {jwtGenerator, jwtDecoder} = require("../utils/jwtToken");
 

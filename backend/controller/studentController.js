@@ -9,21 +9,15 @@ app.use(express.json());
 exports.postStudent = asyncWrapper(async(req, res)=>{
     try {
         const query = `insert into student 
-                    (block_id, usn, first_name,
-                      last_name, password, email,
-                      phone, sr_no, grad_year, room )
-                      values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+                    ( student_id, block_id, usn, room )
+                      values ($1,$2,$3,$4)
                       returning *` ;
     
-        const { block_id, usn, first_name,
-          last_name, password, email,
-          phone, sr_no, grad_year, room } = req.body;
+        const { student_id, block_id, usn, room} = req.body;
     
           const student = await db.pool.query(
             query, 
-              [block_id, usn, first_name,
-                last_name, password, email,
-                phone, sr_no, grad_year, room]
+              [student_id, block_id, usn, room]
           );
           res.json(student.rows[0]);
       } catch(err) {
@@ -33,10 +27,10 @@ exports.postStudent = asyncWrapper(async(req, res)=>{
 
 exports.getStudentByid = asyncWrapper(async(req, res)=> {
     try {
-        const {id} = req.params;
+        const {student_id} = req.params;
         const student = await db.pool.query(
-          "select * from student where id = $1",
-          [id]
+          "select * from student where student_id = $1",
+          [student_id]
         );
         res.json(student.rows)
       } catch (err) {

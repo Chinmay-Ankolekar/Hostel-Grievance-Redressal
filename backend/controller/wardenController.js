@@ -9,13 +9,13 @@ app.use(express.json());
 exports.postWarden = asyncWrapper(async (req, res)=> {
     try {
         const query = `insert into warden (
-        name, password, phone, email) values
-           ($1, $2, $3, $4) returning *`;
+        warden_id, block_id) values
+           ($1, $2) returning *`;
            
-        const { name, password, phone, email} = req.body;
+        const {  warden_id, block_id } = req.body;
   
         const warden = await db.pool.query(
-          query, [ name, password, phone, email]
+          query, [ warden_id, block_id ]
         );
         res.json(warden.rows[0]);
     }catch(err) {
@@ -25,10 +25,10 @@ exports.postWarden = asyncWrapper(async (req, res)=> {
 
 exports.getWardenByid = asyncWrapper(async(req, res)=> {
     try {
-        const {id} = req.params;
+        const {warden_id} = req.params;
         const warden = await db.pool.query(
-          "select * from warden where id = $1",
-          [id]
+          "select * from warden where warden_id = $1",
+          [warden_id]
         );
         res.json(warden.rows)
       } catch (err) {

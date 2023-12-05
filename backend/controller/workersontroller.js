@@ -10,13 +10,13 @@ app.use(express.json());
 exports.postWorkers = asyncWrapper(async(req, res) => {
     try {
         const query = `insert into workers (
-         category_id,  name, password, phone, email) values
-           ($1, $2, $3, $4, $5) returning *`;
+         worker_id, category_id) values
+           ($1, $2) returning *`;
            
-        const {category_id,  name, password, phone, email} = req.body;
+        const {  worker_id, category_id } = req.body;
   
         const workers = await db.pool.query(
-          query, [ category_id,  name, password, phone, email]
+          query, [ worker_id, category_id ]
         );
         res.json(workers.rows[0]);
     }catch(err) {
@@ -26,10 +26,10 @@ exports.postWorkers = asyncWrapper(async(req, res) => {
 
   exports.getWorkersByid = asyncWrapper(async(req, res)=> {
     try {
-        const {id} = req.params;
+        const {worker_id} = req.params;
         const workers = await db.pool.query(
           "select * from warden where id = $1",
-          [id]
+          [worker_id]
         );
         res.json(workers.rows)
       } catch (err) {

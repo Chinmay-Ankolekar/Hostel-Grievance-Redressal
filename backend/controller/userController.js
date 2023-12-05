@@ -12,11 +12,11 @@ app.use(cors());
 app.use(express.json());
 
 exports.userRegister = asyncWrapper( async (req, res) => {
-    const { full_name, user_email,  user_password, type } = req.body;
+    const { full_name, email, phone, password, type } = req.body;
 
     try {
-      const user = await db.pool.query("SELECT * FROM users WHERE user_email = $1", [
-       user_email
+      const user = await db.pool.query("SELECT * FROM users WHERE email = $1", [
+       email
       ]);
   
       if (user.rows.length > 0) {
@@ -24,11 +24,11 @@ exports.userRegister = asyncWrapper( async (req, res) => {
       }
   
       const salt = await bcrypt.genSalt(10);
-      const bcryptPassword = await bcrypt.hash(user_password, salt);
+      const bcryptPassword = await bcrypt.hash(password, salt);
   
       let newUser = await db.pool.query(
-        "INSERT INTO users (full_name, user_email, user_password, type) VALUES ($1, $2, $3, $4) RETURNING *",
-        [full_name, user_email, bcryptPassword, type]
+        "INSERT INTO users (full_name, email,  phone, password,  type) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+        [full_name, email, phone, bcryptPassword, type]
       );
   
       const jwtToken = jwtGenerator(newUser.rows[0].id, newUser.rows[0].type);
@@ -41,11 +41,11 @@ exports.userRegister = asyncWrapper( async (req, res) => {
 });
 
 exports.userLogin = asyncWrapper( async(req, res)=>{
-    const { user_email, user_password } = req.body;
+    const { email, password } = req.body;
 
   try {
-    const user = await db.pool.query("SELECT * FROM users WHERE user_email = $1", [
-      user_email
+    const user = await db.pool.query("SELECT * FROM users WHERE email = $1", [
+      email
     ]);
 
     if (user.rows.length === 0) {
@@ -53,15 +53,15 @@ exports.userLogin = asyncWrapper( async(req, res)=>{
     }
 
     const validPassword = await bcrypt.compare(
-      user_password,
+      password,
 
-      user.rows[0].user_password
+      user.rows[0].password
     );
 
     if (!validPassword) {
       return res.status(401).json("Invalid Credential");
     }
-    const jwtToken = jwtGenerator(user.rows[0].id, user.rows[0].type);
+    const jwtToken = jwtGenerator(user.rows[0].user_id, user.rows[0].type);
     console.log(jwtDecoder(jwtToken))
     return res.json({ jwtToken });
   } catch (err) {

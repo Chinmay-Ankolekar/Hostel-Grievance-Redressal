@@ -61,7 +61,7 @@ const authorizeComplaintRoute = async (req, res, next) => {
     console.log("here", req.headers, token);
     const decodedToken = jwt.verify(token, process.env.JWTSECRET);
     console.log(decodedToken);
-    
+
     return next();
   } catch (err) {
     console.error("here11", err.message);

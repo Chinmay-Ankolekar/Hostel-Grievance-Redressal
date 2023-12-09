@@ -2,6 +2,9 @@ import React from 'react';
 
 const ComplaintForm = () => {
   return (
+
+    
+
     <div className="max-w-lg bg-white shadow-md p-4 rounded-md mb-4 ml-11">
       <h2 className="text-xl font-semibold mb-4">Create Complaint</h2>
       <form>
@@ -14,6 +17,17 @@ const ComplaintForm = () => {
             id="complaintName"
             className="w-full border rounded-md py-2 px-3"
             placeholder="Enter complaint name..."
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="complaintName" className="block text-gray-700 text-sm font-bold mb-2">
+            Room No.
+          </label>
+          <input
+            type="text"
+            id="complaintName"
+            className="w-full border rounded-md py-2 px-3"
+            placeholder="Enter Room No..."
           />
         </div>
         <div className="mb-4">

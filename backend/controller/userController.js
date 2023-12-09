@@ -4,8 +4,6 @@ const app = express();
 const db = require("../db");
 const bcrypt = require("bcrypt");
 // const validInfo = require("../middleware/validInfo");
-const asyncWrapper = require('express-async-handler')
-const {jwtGenerator, jwtDecoder} = require("../utils/jwtToken");
 
 
 app.use(cors());
@@ -30,9 +28,26 @@ exports.userRegister = asyncWrapper( async (req, res) => {
         "INSERT INTO users (full_name, email,  phone, password,  type) VALUES ($1, $2, $3, $4, $5) RETURNING *",
         [full_name, email, phone, bcryptPassword, type]
       );
-  
+
       const jwtToken = jwtGenerator(newUser.rows[0].id, newUser.rows[0].type);
-      
+
+      if (type === "student") {
+        await db.pool.query(
+          "INSERT INTO student (student_id, block_id, usn, room) VALUES ($1, $2, $3, $4)",
+          [newUser.rows[0].id, null, newUser.rows[0].usn, newUser.rows[0].room]
+        );
+      } else if (type === "warden") {
+        await db.pool.query(
+          "INSERT INTO warden (warden_id,block_id) VALUES ($1, $2)",
+          [newUser.rows[0].id, null]
+        );
+      } else if (type === "worker") {
+        await db.pool.query(
+          "INSERT INTO worker (worker_id,category_id ) VALUES ($1,$2 )",
+          [newUser.rows[0].id, null]
+        );
+      }
+     
       return res.json({ jwtToken });
     } catch (err) {
       console.error(err.message);

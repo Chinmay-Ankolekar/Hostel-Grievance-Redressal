@@ -4,6 +4,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
 import { RoutesPathName } from './constants';
+import PrivateRoute from './context/PrivateRoute';
 
 const router = createBrowserRouter([
 	{
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
 	{
 		path: RoutesPathName.DASHBOARD_PAGE,
 		element: (
-      <Dashboard/>
+			<PrivateRoute />
 		),
 	}
      ]);

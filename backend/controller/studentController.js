@@ -22,7 +22,7 @@ exports.postStudent = asyncWrapper(async(req, res)=>{
           res.json(student.rows[0]);
       } catch(err) {
         console.log(err.message);
-      }
+      }$2
 });
 
 exports.getStudentByid = asyncWrapper(async(req, res)=> {

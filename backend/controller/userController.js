@@ -4,6 +4,9 @@ const app = express();
 const db = require("../db");
 const bcrypt = require("bcrypt");
 // const validInfo = require("../middleware/validInfo");
+const asyncWrapper=require('express-async-handler')
+const {jwtGenerator, jwtDecoder} = require("../utils/jwtToken");
+const { authorizeStudent }= require('../middleware/auth')
 
 
 app.use(cors());
@@ -32,9 +35,11 @@ exports.userRegister = asyncWrapper( async (req, res) => {
       const jwtToken = jwtGenerator(newUser.rows[0].id, newUser.rows[0].type);
 
       if (type === "student") {
+        const {block_id, usn, room} = req.body;
+        console.log(newUser.rows);
         await db.pool.query(
           "INSERT INTO student (student_id, block_id, usn, room) VALUES ($1, $2, $3, $4)",
-          [newUser.rows[0].id, null, newUser.rows[0].usn, newUser.rows[0].room]
+          [newUser.rows[0].user_id, block_id, usn, room]
         );
       } else if (type === "warden") {
         await db.pool.query(

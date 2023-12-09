@@ -3,9 +3,8 @@ const cors = require("cors");
 const app = express();
 const db = require("../db");
 const asyncWrapper=require('express-async-handler')
-const jwtDecoder = require("../utils/jwtToken").jwtDecoder;
+
 const jwt = require("jsonwebtoken");
-const asyncWrapper = require('express-async-handler')
 const {jwtGenerator, jwtDecoder} = require("../utils/jwtToken");
 const { authorizeStudent }= require('../middleware/auth')
 
@@ -16,7 +15,7 @@ app.use(express.json());
 const decodeStudent = async (token) => {
   try {
     // const token = req.headers.authorization;
-    console.log("here", req.headers,token);
+    //console.log("here", req.headers,token);
     const decodedToken = jwt.verify(token, process.env.JWTSECRET);
     console.log(decodedToken)
     // if (decodedToken.user.type === "student") {
@@ -41,9 +40,9 @@ const decodeStudent = async (token) => {
       }
     }
     
-    return null;
+    return studentInfo;
   } catch (err) {
-    console.error("here11",err.message);
+    console.error("here111",err.message);
     // return res.status(401).json({ error: "Unauthorized" });
   }
 };  
@@ -78,6 +77,7 @@ const decodeStudent = async (token) => {
 exports.postComplaints = asyncWrapper(async (req , res)=> {
     try {
       const token = req.headers.authorization;
+      console.log(token);
       const studentInfo = await decodeStudent(token);
       
       if(studentInfo){
@@ -100,7 +100,7 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
           query,
           [name, block_id, null,
             student_id, null, null, 
-            description, room, is_completed, new Date().toISOString(),
+            description, room, false, new Date().toISOString(),
             null]
         );
         res.json(newComplaint.rows[0]);

@@ -14,7 +14,7 @@ const authorizeWarden = async (req, res, next) => {
     }
 
   } catch (err) {
-    console.error("here11",err.message);
+    console.error("here1",err.message);
     return res.status(401).json({ error: "Unauthorized" });
   }
 };
@@ -32,7 +32,7 @@ const authorizeWorker = async (req, res, next) => {
     }
 
   } catch (err) {
-    console.error("here11",err.message);
+    console.error("here12",err.message);
     return res.status(401).json({ error: "Unauthorized" });
   }
 };
@@ -50,7 +50,7 @@ const authorizeStudent = async (req, res, next) => {
     }
 
   } catch (err) {
-    console.error("here11",err.message);
+    console.error("here13",err.message);
     return res.status(401).json({ error: "Unauthorized" });
   }
 };

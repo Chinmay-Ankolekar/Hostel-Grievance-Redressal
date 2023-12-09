@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ComplaintForm = () => {
   const [name, setName] = useState("");
@@ -18,22 +18,19 @@ const ComplaintForm = () => {
 
     try {
         
-      const body = { description };
+      const body = { name, description };
       const response = await fetch("http://localhost:3000/complaints", {
         method: "POST",
-        headers: { "content-Type": "application/json" , "Authorization" :"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjE3LCJ0eXBlIjoic3R1ZGVudCJ9LCJpYXQiOjE3MDIxMzcxMDIsImV4cCI6MTcwMjE0MDcwMn0.wrL4mFEMzAzqC_eiu1LKAQqSYWoivdlKeemaKsCJXv0"},
+        headers: { "content-Type": "application/json" , "Authorization" :"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjE3LCJ0eXBlIjoic3R1ZGVudCJ9LCJpYXQiOjE3MDIxNDMwNjIsImV4cCI6MTcwMjE0NjY2Mn0.R96fq5ARfTYmfloexEcNTi4l2GUJ8nsxOPlyx4INMgc"},
         body: JSON.stringify(body),
       });
-      window.location = "/";
+      window.location="/"
     } catch (err) {
       console.error(err.message);
     }
   };
 
   return (
-
-
-
     <div className="max-w-lg bg-white shadow-md p-4 rounded-md mb-4 ml-11">
       <h2 className="text-xl font-semibold mb-4">Create Complaint</h2>
       <form onSubmit={onSubmitForm}>
@@ -64,7 +61,7 @@ const ComplaintForm = () => {
         </div>
         <div className="flex justify-end">
           <button
-            type="button"
+            type="submit"
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Create Complaint
@@ -78,7 +75,8 @@ const ComplaintForm = () => {
 const ComplaintsPage = () => {
   const [ complaints , setComplaints ] = useState([]);
 
-  const getComplaints = async () => {
+  const getComplaints = async (e) => {
+   
     try {
       const response = await fetch("http://localhost:3000/complaints");
       const jsonData = await response.json();
@@ -125,9 +123,9 @@ const ComplaintsPage = () => {
         </div>
 
         {/* Complaint Form */}
-        <ComplaintForm />
       </div>
- ))}
+ ))}        <ComplaintForm />
+
     </div>
   );
 };

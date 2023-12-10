@@ -106,20 +106,20 @@ const ComplaintsPage = () => {
 
   return (
     <div className="flex flex-col items-start justify-start min-h-screen gap-x-10">
-      {/* Heading */}
+   
       <h1 className="mt-5 ml-5 mb-5 text-3xl">Complaints</h1>
       {complaints.map((complaint) => (
         <div key={complaint.complaint_id} className="flex">
-          {/* Complaint Card */}
+
           <div className="max-w-xl bg-white shadow-md p-4 rounded-md mb-[160px] ml-8">
             <h2 className="text-lg font-semibold mb-2">{complaint.name}</h2>
             <div className="flex items-center mb-2">
-              {/* Left Column: Description */}
+   
               <div className="flex-1 pr-4">
                 <p className="text-gray-700">{complaint.description}</p>
               </div>
 
-              {/* Right Column: Approved and Done */}
+
               <div className="flex-shrink-0">
                 <div className="bg-red-500 text-white px-3 py-1 rounded-full mb-2">
                   Not Approved
@@ -131,7 +131,7 @@ const ComplaintsPage = () => {
             </div>
           </div>
 
-          {/* Complaint Form */}
+   
         </div>
       ))}{" "}
       <ComplaintForm />

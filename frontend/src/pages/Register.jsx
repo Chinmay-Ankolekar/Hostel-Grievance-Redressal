@@ -325,7 +325,7 @@ function Register() {
                   onChange={(e) => setUsn(e.target.value)}
                 />
              
-                          <div class="hidden absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
+                          <div class=" hidden absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                             <svg
                               class="h-5 w-5 text-red-500"
                               width="16"
@@ -349,7 +349,7 @@ function Register() {
  )}
                       <div>
                         <p className="text-sm text-white">Role</p>
-                        <div className="flex justify-between mt-1 px-1 gap-x-11 dark:bg-slate-900 rounded-md text-sm">
+                        <div className="flex gap-x-3 w-fit pl-2 pr-2 dark:bg-slate-900 rounded-md text-sm">
                           <button
                             type="button"
                             onClick={() => setRole(Roles.WARDEN)}
@@ -370,7 +370,7 @@ function Register() {
                           >
                             Student
                           </button>
-                          <button
+                          {/* <button
                             type="button"
                             onClick={() => setRole(Roles.WORKER)}
                             className={clsx(
@@ -379,7 +379,7 @@ function Register() {
                             )}
                           >
                             Workers
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     

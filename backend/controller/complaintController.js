@@ -137,6 +137,7 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
 // });
 
 exports.getAllComplaintsByid = asyncWrapper(async(req, res) => {
+  const token = req.headers.authorization;
   const decodedToken = jwt.verify(token, process.env.JWTSECRET);
     console.log(decodedToken)
     const { user_id, type } = decodedToken.user;
@@ -159,7 +160,11 @@ exports.getAllComplaintsByid = asyncWrapper(async(req, res) => {
         //   "SELECT * FROM complaint WHERE id = $1",
         //   [id]
         // );
-        res.json(result.rows[0]);
+        if (result.rows.length > 0) {
+          res.json(result.rows[0]);
+        } else {
+          res.status(404).json({ error: "Complaint not found" });
+        }
       } catch (err) {
         console.log(err.message);
       }

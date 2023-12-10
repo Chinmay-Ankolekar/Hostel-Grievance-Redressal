@@ -101,7 +101,7 @@ const ComplaintsPage = () => {
   const handleApproval = async (complaint_id) => {
     try {
       const response = await fetch(`http://localhost:3000/complaints/${complaint_id}`, {
-        method: "POST",
+        method: "GET",
         headers: GetAuthHeader(),
       });
 

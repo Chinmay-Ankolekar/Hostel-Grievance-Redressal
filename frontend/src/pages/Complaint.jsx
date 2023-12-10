@@ -98,6 +98,23 @@ const ComplaintsPage = () => {
     }
   };
 
+  const handleApproval = async (complaint_id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/complaints/${complaint_id}`, {
+        method: "GET",
+        headers: GetAuthHeader(),
+      });
+
+      if (response.ok) {
+        getComplaints();
+      } else {
+        console.error('Failed to update approval status');
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   useEffect(() => {
     getComplaints();
   }, []);

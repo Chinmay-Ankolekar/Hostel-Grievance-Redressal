@@ -1,7 +1,32 @@
 import { useState } from "react";
 
 function Login() {
- 
+  const [ email, setEmail ] = useState("")
+  const [ password, setPassword ] = useState("")
+
+  const onSubmit = async(e) => {
+    e.preventDefault();
+
+    try {
+        const body = { email, password}
+        const response = await fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: {"content-type": "application/json "},
+            body : JSON.stringify(body),
+        });
+        console.log(response)
+        const data = await response.json();
+        console.log(data);
+       if(data.jwtToken) {
+        window.location = "/"
+       }
+       
+        //window.location = "/signup"
+    }catch(err) {
+        console.log(err.message);
+    }
+  }
+
   return (
     <>
       <div class="h-screen">
@@ -25,7 +50,7 @@ function Login() {
                 </div>
 
                 <div class="mt-5">
-                  <form>
+                  <form onSubmit={onSubmit}>
                     <div class="grid gap-y-4">
                       <div>
                         <label
@@ -42,6 +67,7 @@ function Login() {
                             class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                             required
                             aria-describedby="email-error"
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                           <div class="hidden absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                             <svg
@@ -91,6 +117,7 @@ function Login() {
                               fill="currentColor"
                               viewBox="0 0 16 16"
                               aria-hidden="true"
+                              onChange={(e) => setPassword(e.target.value)}
                             >
                               <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                             </svg>

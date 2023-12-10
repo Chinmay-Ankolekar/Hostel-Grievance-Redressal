@@ -23,6 +23,12 @@ function Register() {
             body : JSON.stringify(body),
         });
         console.log(response)
+        const data = await response.json();
+        console.log(data);
+       if(data.jwtToken) {
+        window.location = "/"
+       }
+       
         //window.location = "/signup"
     }catch(err) {
         console.log(err.message);

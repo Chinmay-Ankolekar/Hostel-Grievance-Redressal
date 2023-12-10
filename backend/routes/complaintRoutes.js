@@ -6,6 +6,6 @@ complaintRoutes.route("/complaints").post(postComplaints);
 
 complaintRoutes.route("/complaints").get(getAllComplaintsByUser); 
 
-complaintRoutes.route("/complaints/:id").put(putComplaintsByid);
+complaintRoutes.route("/complaints/:id").post(putComplaintsByid);
 
 module.exports = complaintRoutes;

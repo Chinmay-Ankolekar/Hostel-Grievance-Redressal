@@ -11,7 +11,6 @@ function Register() {
   const [block_id, setBlock_id] = useState("");
   const [usn, setUsn] = useState("");
   const [room, setRoom] = useState("");
-
   const onSubmit = async(e) => {
     e.preventDefault();
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GetAuthHeader } from "../utils/Headers";
+import clsx from "clsx";
 
 const WardenComplaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -18,19 +19,15 @@ const WardenComplaints = () => {
     }
   };
 
-  const handleApproval = async (complaint_id, currentStatus) => {
+  const handleApproval = async (id) => {
+    
     try {
-        const newStatus = !currentStatus;
-      const response = await fetch(`http://localhost:3000/complaints/${complaint_id}`, {
-        method: "GET",
+      const response = await fetch(`http://localhost:3000/complaints/${id}`, {
+        method: "POST",
         headers: GetAuthHeader(),
       });
-      is_completed = newStatus;
-      if (response.ok) {
-        getComplaints();
-      } else {
-        console.error('Failed to update approval status');
-      }
+     
+      console.log(response);
 
     } catch (err) {
       console.error(err.message);
@@ -50,7 +47,7 @@ const WardenComplaints = () => {
    
       <h1 className="mt-5 ml-5 mb-5 text-3xl">Complaints</h1>
       {complaints.map((complaint) => (
-        <div key={complaint.complaint_id} className="flex">
+        <div key={complaint.id} className="flex">
 
           <div className="max-w-xl bg-white shadow-md p-4 rounded-md mb-[160px] ml-8">
             <h2 className="text-lg font-semibold mb-2">{complaint.name}</h2>
@@ -62,11 +59,11 @@ const WardenComplaints = () => {
 
 
               <div className="flex-shrink-0">
-            <button
-              className={`bg-${complaint.is_completed ? 'green' : 'red'}-500 text-white px-3 py-1 rounded-full mb-2`}
-              onClick={() => handleApproval(complaint.complaint_id, complaint.is_completed)}
+            <button type="button"
+              className={clsx(` text-white px-3 py-1 rounded-full mb-2`, complaint.is_completed ? "bg-green-500" : "bg-red-600")}
+              onClick={() => handleApproval(complaint.id)}
             >
-              {complaint.is_completed ? 'Not Approved' : 'Approved'}
+              {complaint.is_completed ? 'Approved' : 'Not Approved'}
             </button>
             <div className="bg-red-500 text-white px-3 py-1 rounded-full">
               Not Done

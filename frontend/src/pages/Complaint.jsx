@@ -17,11 +17,12 @@ const ComplaintForm = () => {
       }
 
     try {
-        
       const body = { name, description };
       const response = await fetch("http://localhost:3000/complaints", {
         method: "POST",
-        headers: { "content-Type": "application/json" , "Authorization" :"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjE3LCJ0eXBlIjoic3R1ZGVudCJ9LCJpYXQiOjE3MDIxNDMwNjIsImV4cCI6MTcwMjE0NjY2Mn0.R96fq5ARfTYmfloexEcNTi4l2GUJ8nsxOPlyx4INMgc"},
+        headers: { "content-Type": "application/json" , 
+        "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjI1LCJ0eXBlIjoid2FyZGVuIn0sImlhdCI6MTcwMjE4MzU3MSwiZXhwIjoxNzAyMTg3MTcxfQ.1ckQouXE7gdqcq9UgYGor81WZBNGVL5eHITvIt5kiCQ"
+      },
         body: JSON.stringify(body),
       });
       window.location="/"
@@ -78,7 +79,12 @@ const ComplaintsPage = () => {
   const getComplaints = async (e) => {
    
     try {
-      const response = await fetch("http://localhost:3000/complaints");
+      const response = await fetch("http://localhost:3000/complaints", {
+        method: "GET",
+        headers: { "content-Type": "application/json" , 
+        "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjI1LCJ0eXBlIjoid2FyZGVuIn0sImlhdCI6MTcwMjE4MzU3MSwiZXhwIjoxNzAyMTg3MTcxfQ.1ckQouXE7gdqcq9UgYGor81WZBNGVL5eHITvIt5kiCQ"
+      },
+      });
       const jsonData = await response.json();
 
       setComplaints(jsonData);

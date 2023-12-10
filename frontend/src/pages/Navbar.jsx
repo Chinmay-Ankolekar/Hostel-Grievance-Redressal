@@ -1,4 +1,13 @@
+import { useState } from "react";
+
 function Navbar() {
+  const [authToken, setAuthToken] = useState(localStorage.getItem("jwtToken"));
+
+  const logout = () => {
+    setAuthToken(null);
+    localStorage.removeItem("jwtToken");
+  };
+
     return( 
         <>
          <nav className="bg-white shadow-md p-4">
@@ -20,8 +29,9 @@ function Navbar() {
             Account
           </a>
           <a
-            href="#"
+            href="/login"
             className="text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium"
+            onClick={logout}
           >
             Logout
           </a>

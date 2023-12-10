@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { GetAuthHeader } from "../utils/Headers";
 
 const ComplaintForm = () => {
   const [name, setName] = useState("");
@@ -7,25 +8,26 @@ const ComplaintForm = () => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
 
-    if (!name || name.trim() === '') {
-        alert('Please enter a valid name.');
-        return; 
-      }
-    if (!description || description.trim() === '') {
-        alert('Please enter a valid complaint.');
-        return; 
-      }
+    if (!name || name.trim() === "") {
+      alert("Please enter a valid name.");
+      return;
+    }
+    if (!description || description.trim() === "") {
+      alert("Please enter a valid complaint.");
+      return;
+    }
 
     try {
+      console.log(localStorage.getItem("jwtToken"));
+      const headers = GetAuthHeader();
+      console.log("headers", headers);
       const body = { name, description };
       const response = await fetch("http://localhost:3000/complaints", {
         method: "POST",
-        headers: { "content-Type": "application/json" , 
-        "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjI1LCJ0eXBlIjoid2FyZGVuIn0sImlhdCI6MTcwMjE4MzU3MSwiZXhwIjoxNzAyMTg3MTcxfQ.1ckQouXE7gdqcq9UgYGor81WZBNGVL5eHITvIt5kiCQ"
-      },
+        headers: headers,
         body: JSON.stringify(body),
       });
-      window.location="/"
+      window.location = "/";
     } catch (err) {
       console.error(err.message);
     }
@@ -36,7 +38,10 @@ const ComplaintForm = () => {
       <h2 className="text-xl font-semibold mb-4">Create Complaint</h2>
       <form onSubmit={onSubmitForm}>
         <div className="mb-4">
-          <label htmlFor="complaintName" className="block text-gray-700 text-sm font-bold mb-2">
+          <label
+            htmlFor="complaintName"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Complaint Name
           </label>
           <input
@@ -44,12 +49,15 @@ const ComplaintForm = () => {
             id="complaintName"
             className="w-full border rounded-md py-2 px-3"
             value={name}
-            onChange={(e)=> setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
             placeholder="Enter complaint name..."
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="complaintDescription" className="block text-gray-700 text-sm font-bold mb-2">
+          <label
+            htmlFor="complaintDescription"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Complaint Description
           </label>
           <textarea
@@ -74,21 +82,17 @@ const ComplaintForm = () => {
 };
 
 const ComplaintsPage = () => {
-  const [ complaints , setComplaints ] = useState([]);
+  const [complaints, setComplaints] = useState([]);
 
   const getComplaints = async (e) => {
-   
     try {
       const response = await fetch("http://localhost:3000/complaints", {
         method: "GET",
-        headers: { "content-Type": "application/json" , 
-        "Authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOjI1LCJ0eXBlIjoid2FyZGVuIn0sImlhdCI6MTcwMjE4MzU3MSwiZXhwIjoxNzAyMTg3MTcxfQ.1ckQouXE7gdqcq9UgYGor81WZBNGVL5eHITvIt5kiCQ"
-      },
+        headers: GetAuthHeader()
       });
       const jsonData = await response.json();
 
       setComplaints(jsonData);
-      
     } catch (err) {
       console.error(err.message);
     }
@@ -102,36 +106,35 @@ const ComplaintsPage = () => {
 
   return (
     <div className="flex flex-col items-start justify-start min-h-screen gap-x-10">
-
       {/* Heading */}
       <h1 className="mt-5 ml-5 mb-5 text-3xl">Complaints</h1>
+      {complaints.map((complaint) => (
+        <div key={complaint.complaint_id} className="flex">
+          {/* Complaint Card */}
+          <div className="max-w-xl bg-white shadow-md p-4 rounded-md mb-[160px] ml-8">
+            <h2 className="text-lg font-semibold mb-2">{complaint.name}</h2>
+            <div className="flex items-center mb-2">
+              {/* Left Column: Description */}
+              <div className="flex-1 pr-4">
+                <p className="text-gray-700">{complaint.description}</p>
+              </div>
 
-    { complaints.map((complaint) => (
-      <div key={complaint.complaint_id} className="flex">
-        {/* Complaint Card */}
-        <div className="max-w-xl bg-white shadow-md p-4 rounded-md mb-[160px] ml-8">
-          <h2 className="text-lg font-semibold mb-2">{complaint.name}</h2>
-          <div className="flex items-center mb-2">
-            {/* Left Column: Description */}
-            <div className="flex-1 pr-4">
-              <p className="text-gray-700">
-                {complaint.description}
-              </p>
-            </div>
-
-            {/* Right Column: Approved and Done */}
-            <div className="flex-shrink-0">
-              <div className="bg-red-500 text-white px-3 py-1 rounded-full mb-2">Not Approved</div>
-              <div className="bg-red-500 text-white px-3 py-1 rounded-full">Not Done</div>
+              {/* Right Column: Approved and Done */}
+              <div className="flex-shrink-0">
+                <div className="bg-red-500 text-white px-3 py-1 rounded-full mb-2">
+                  Not Approved
+                </div>
+                <div className="bg-red-500 text-white px-3 py-1 rounded-full">
+                  Not Done
+                </div>
+              </div>
             </div>
           </div>
-          
+
+          {/* Complaint Form */}
         </div>
-
-        {/* Complaint Form */}
-      </div>
- ))}        <ComplaintForm />
-
+      ))}{" "}
+      <ComplaintForm />
     </div>
   );
 };

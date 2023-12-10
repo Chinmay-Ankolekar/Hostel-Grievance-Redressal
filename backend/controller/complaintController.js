@@ -8,7 +8,6 @@ const jwt = require("jsonwebtoken");
 const {jwtGenerator, jwtDecoder} = require("../utils/jwtToken");
 const { authorizeStudent }= require('../middleware/auth')
 
-
 app.use(cors());
 app.use(express.json());
 
@@ -198,6 +197,21 @@ exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
   }
 });
 
+exports.getUserType = asyncWrapper(async(req, res)=> {
+  try{
+  const token = req.headers.authorization;
+  console.log(token);
+  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+  console.log(decodedToken)
+  const { type } = decodedToken.user;
+
+  res.json({ userType: type });
+  }  
+ catch (err) {
+  console.error(err.message);
+  res.status(500).json({ error: "Internal Server Error" });
+}
+})
 
 
 

@@ -136,18 +136,34 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
 //       }
 // });
 
-// exports.getAllComplaintsByid = asyncWrapper(async(req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const myComplaint = await db.pool.query(
-//           "SELECT * FROM complaint WHERE id = $1",
-//           [id]
-//         );
-//         res.json(myComplaint.rows);
-//       } catch (err) {
-//         console.log(err.message);
-//       }
-// });
+exports.getAllComplaintsByid = asyncWrapper(async(req, res) => {
+  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+    console.log(decodedToken)
+    const { user_id, type } = decodedToken.user;
+    try {
+      const { id } = req.params;
+      let is_completed;
+
+      if (type === "warden") {
+        is_completed = true;
+      } else {
+        is_completed = false;
+      }
+  
+      const result = await pool.query(
+        "UPDATE complaint SET is_completed = $1 WHERE id = $2 RETURNING *",
+        [is_completed, id]
+      );
+        
+        // const myComplaint = await db.pool.query(
+        //   "SELECT * FROM complaint WHERE id = $1",
+        //   [id]
+        // );
+        res.json(result.rows[0]);
+      } catch (err) {
+        console.log(err.message);
+      }
+});
 
 exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
   const token = req.headers.authorization;
@@ -176,6 +192,8 @@ exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 
 
 

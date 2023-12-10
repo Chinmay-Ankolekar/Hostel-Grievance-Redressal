@@ -35,51 +35,7 @@ const ComplaintForm = () => {
   };
 
   return (
-    // <div className="max-w-lg bg-white shadow-md p-4 rounded-md mb-4 ml-11">
-    //   <h2 className="text-xl font-semibold mb-4">Create Complaint</h2>
-    //   <form onSubmit={onSubmitForm}>
-    //     <div className="mb-4">
-    //       <label
-    //         htmlFor="complaintName"
-    //         className="block text-gray-700 text-sm font-bold mb-2"
-    //       >
-    //         Complaint Name
-    //       </label>
-    //       <input
-    //         type="text"
-    //         id="complaintName"
-    //         className="w-full border rounded-md py-2 px-3"
-    //         value={name}
-    //         onChange={(e) => setName(e.target.value)}
-    //         placeholder="Enter complaint name..."
-    //       />
-    //     </div>
-    //     <div className="mb-4">
-    //       <label
-    //         htmlFor="complaintDescription"
-    //         className="block text-gray-700 text-sm font-bold mb-2"
-    //       >
-    //         Complaint Description
-    //       </label>
-    //       <textarea
-    //         id="complaintDescription"
-    //         className="w-full border rounded-md py-2 px-3"
-    //         value={description}
-    //         onChange={(e) => setDescription(e.target.value)}
-    //         placeholder="Enter complaint description..."
-    //       />
-    //     </div>
-    //     <div className="flex justify-end">
-    //       <button
-    //         type="submit"
-    //         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-    //       >
-    //         Create Complaint
-    //       </button>
-    //     </div>
-    //   </form>
-    // </div>
-
+   
 
 <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
   <div class="mx-auto max-w-2xl">
@@ -165,6 +121,11 @@ const ComplaintsPage = () => {
     <div >
    
 <h1 className="mt-4 ml-4 mb-1 text-2xl font-semibold">Complaints</h1>
+{complaints.length === 0 ? (
+        <p className="ml-4 mt-2 text-gray-600 text-xl">
+          No complaints registered yet.
+        </p>
+      ) : (
 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 ml-4 mr-4">
   {complaints.map((complaint) => (
     <div key={complaint.complaint_id} className="mt-5 flex flex-col bg-white border border-t-4 border-t-blue-600 shadow-sm rounded-xl">
@@ -191,6 +152,7 @@ const ComplaintsPage = () => {
     </div>
   ))}
 </div>
+      )}
          <ComplaintForm />
        </div>
   );

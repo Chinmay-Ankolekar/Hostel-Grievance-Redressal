@@ -15,8 +15,10 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("jwtToken");
   };
 
+  const headers = { "content-Type": "application/json" , "Authorization" : authToken }
+
   return (
-    <AuthContext.Provider value={{ authToken, login, logout }}>
+    <AuthContext.Provider value={{ authToken, login, logout, headers }}>
       {children}
     </AuthContext.Provider>
   );

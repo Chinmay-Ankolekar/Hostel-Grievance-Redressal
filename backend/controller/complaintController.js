@@ -151,6 +151,7 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
 
 exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
   const token = req.headers.authorization;
+  console.log(token);
   const decodedToken = jwt.verify(token, process.env.JWTSECRET);
   console.log(decodedToken)
 

@@ -98,6 +98,23 @@ const ComplaintsPage = () => {
     }
   };
 
+  const handleApproval = async (complaint_id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/complaints/${complaint_id}`, {
+        method: "POST",
+        headers: GetAuthHeader(),
+      });
+
+      if (response.ok) {
+        getComplaints();
+      } else {
+        console.error('Failed to update approval status');
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   useEffect(() => {
     getComplaints();
   }, []);
@@ -122,7 +139,8 @@ const ComplaintsPage = () => {
 
               <div className="flex-shrink-0">
                 <div className="bg-red-500 text-white px-3 py-1 rounded-full mb-2">
-                  Not Approved
+                onClick={() => handleApproval(complaint.complaint_id)}
+              {complaint.is_completed ? 'Approved' : 'Not Approved'}
                 </div>
                 <div className="bg-red-500 text-white px-3 py-1 rounded-full">
                   Not Done

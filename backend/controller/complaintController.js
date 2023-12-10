@@ -136,7 +136,7 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
 //       }
 // });
 
-exports.getAllComplaintsByid = asyncWrapper(async(req, res) => {
+exports.putComplaintsByid = asyncWrapper(async(req, res) => {
   const decodedToken = jwt.verify(token, process.env.JWTSECRET);
     console.log(decodedToken)
     const { user_id, type } = decodedToken.user;

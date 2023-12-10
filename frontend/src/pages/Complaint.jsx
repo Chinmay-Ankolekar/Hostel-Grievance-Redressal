@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GetAuthHeader } from "../utils/Headers";
+import clsx from "clsx";
 
 const ComplaintForm = () => {
   const [name, setName] = useState("");
@@ -138,9 +139,12 @@ const ComplaintsPage = () => {
 
 
               <div className="flex-shrink-0">
-                <div className="bg-red-500 text-white px-3 py-1 rounded-full mb-2">
-                  not approved
-                  </div>
+              <button type="button"
+              className={clsx(` text-white px-3 py-1 rounded-full mb-2`, complaint.is_completed ? "bg-green-500" : "bg-red-600")}
+             // onClick={() => handleApproval(complaint.id)}
+            >
+              {complaint.is_completed ? 'Approved' : 'Not Approved'}
+            </button>
                 <div className="bg-red-500 text-white px-3 py-1 rounded-full">
                   Not Done
                 </div>

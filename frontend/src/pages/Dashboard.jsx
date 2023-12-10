@@ -6,8 +6,8 @@ function Dashboard() {
     return (
         <>
          <Navbar/>
-         {/* <Complaint/> */}
-         <WardenComplaints/>
+         <Complaint/>
+         {/* <WardenComplaints/> */}
         </>
     )
 }

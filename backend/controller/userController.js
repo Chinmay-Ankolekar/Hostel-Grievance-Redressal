@@ -7,8 +7,7 @@ const bcrypt = require("bcrypt");
 const asyncWrapper=require('express-async-handler')
 const {jwtGenerator, jwtDecoder} = require("../utils/jwtToken");
 const { authorizeStudent }= require('../middleware/auth')
-
-
+const jwt = require("jsonwebtoken");
 app.use(cors());
 app.use(express.json());
 
@@ -90,3 +89,5 @@ exports.userLogin = asyncWrapper( async(req, res)=>{
     res.status(500).send("Server error");
   }
 });
+
+

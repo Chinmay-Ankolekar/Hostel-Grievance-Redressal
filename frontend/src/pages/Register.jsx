@@ -16,7 +16,13 @@ function Register() {
     e.preventDefault();
 
     try {
-        const body = {full_name:fullname, email, password,phone, type: role, block_id, usn, room}
+        // const body = {full_name:fullname, email, password,phone, type: role, block_id, usn, room}
+        let body;
+      if (role === Roles.WARDEN) {
+        body = { full_name: fullname, email, password, phone, type: role, block_id };
+      } else {
+        body = { full_name: fullname, email, password, phone, type: role, block_id, usn, room };
+      }
         const response = await fetch("http://localhost:3000/register", {
             method: "POST",
             headers: {"content-type": "application/json "},
@@ -49,7 +55,7 @@ function Register() {
                     Already have an account?
                     <a
                       class="text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      href="../examples/html/signin.html"
+                      href="/login"
                     >
                       Sign in here
                     </a>
@@ -250,7 +256,7 @@ function Register() {
                           Please enter your Block-Id
                         </p>
                       </div>
-
+                      {role !== Roles.WARDEN && (
                       <div>
                         <label
                           for="full-name"
@@ -259,7 +265,18 @@ function Register() {
                           USN
                         </label>
                         <div class="relative">
-                          <input
+                       
+                <input
+                  type="text"
+                  id="full-name"
+                  name="full-name"
+                  class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  required
+                  aria-describedby="full-name-error"
+                  onChange={(e) => setUsn(e.target.value)}
+                />
+           
+                          {/* <input
                             type="text"
                             id="full-name"
                             name="full-name"
@@ -267,7 +284,7 @@ function Register() {
                             required
                             aria-describedby="full-name-error"
                             onChange={(e) => setUsn(e.target.value)}
-                          />
+                          /> */}
                           <div class="hidden absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                             <svg
                               class="h-5 w-5 text-red-500"
@@ -288,7 +305,8 @@ function Register() {
                           Please enter your USN
                         </p>
                       </div>
-
+   )}
+   {role !== Roles.WARDEN && (
                       <div>
                         <label
                           for="full-name"
@@ -297,7 +315,18 @@ function Register() {
                           Room No.
                         </label>
                         <div class="relative">
-                          <input
+                         
+                <input
+                  type="text"
+                  id="full-name"
+                  name="full-name"
+                  class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                  required
+                  aria-describedby="full-name-error"
+                  onChange={(e) => setUsn(e.target.value)}
+                />
+             
+                          {/* <input
                             type="text"
                             id="full-name"
                             name="full-name"
@@ -305,7 +334,7 @@ function Register() {
                             required
                             aria-describedby="full-name-error"
                             onChange={(e) => setRoom(e.target.value)}
-                          />
+                          /> */}
                           <div class="hidden absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                             <svg
                               class="h-5 w-5 text-red-500"
@@ -326,7 +355,7 @@ function Register() {
                           Please enter your Room.no
                         </p>
                       </div>
-
+ )}
                       <div>
                         <p className="text-sm text-white">Role</p>
                         <div className="flex justify-between mt-1 px-1 gap-x-11 dark:bg-slate-900 rounded-md text-sm">

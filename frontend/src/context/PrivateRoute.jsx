@@ -4,10 +4,12 @@ import Dashboard from '../pages/Dashboard';
 import { useAuth } from './AuthProvider';
 
 const PrivateRoute = () => {
-  const { authToken } = useAuth();
+  const { authToken, headers } = useAuth();
+
+  console.log(authToken, headers);
 
   return authToken ? (
-    <Route path="/" element={<Dashboard />} /> 
+    <Dashboard/>
   ) : (
     <Navigate to="/login" /> 
   );

@@ -11,14 +11,16 @@ function Login() {
         const body = { email, password}
         const response = await fetch("http://localhost:3000/login", {
             method: "POST",
-            headers: {"content-type": "application/json "},
+            headers: {"content-type": "application/json"},
             body : JSON.stringify(body),
         });
         console.log(response)
         const data = await response.json();
         console.log(data);
-       if(data.jwtToken) {
-        window.location = "/"
+       
+        if(data.jwtToken) {
+          localStorage.setItem("jwtToken", data.jwtToken);
+       window.location = "/"
        }
        
         //window.location = "/signup"
@@ -42,7 +44,7 @@ function Login() {
                     Don't have an account yet?
                     <a
                       class="text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-                      href="../examples/html/signup.html"
+                      href="/signup"
                     >
                       Sign up here
                     </a>
@@ -108,6 +110,7 @@ function Login() {
                             class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
                             required
                             aria-describedby="password-error"
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                           <div class="hidden absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                             <svg

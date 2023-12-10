@@ -12,7 +12,7 @@ const { authorizeStudent }= require('../middleware/auth')
 app.use(cors());
 app.use(express.json());
 
-const decodeStudent = async (token) => {
+const decodeUser = async (token) => {
   try {
     // const token = req.headers.authorization;
     //console.log("here", req.headers,token);
@@ -24,6 +24,7 @@ const decodeStudent = async (token) => {
     //  return res.status(403).json({ error: "Unauthorized for Student" });
     // }
     const { user_id, type } = decodedToken.user;
+    let userInfo;
 
     if (type === "student") {
       
@@ -34,13 +35,29 @@ const decodeStudent = async (token) => {
       `;
 
       const result = await db.pool.query(query, [user_id]);
+      console.log(result.rows);
+      if (result.rows.length > 0) {
+        userInfo = result.rows[0];
+      }
+    }
+
+    if (type === "warden") {
+      
+      const query = `
+        SELECT warden_id,  block_id
+        FROM warden 
+        WHERE warden_id = $1
+      `;
+
+      const result = await db.pool.query(query, [user_id]);
 
       if (result.rows.length > 0) {
-        studentInfo = result.rows[0];
+        userInfo = result.rows[0];
       }
     }
     
-    return studentInfo;
+    return userInfo;
+
   } catch (err) {
     console.error("here111",err.message);
     // return res.status(401).json({ error: "Unauthorized" });
@@ -78,10 +95,10 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
     try {
       const token = req.headers.authorization;
       console.log(token);
-      const studentInfo = await decodeStudent(token);
+      const userInfo = await decodeUser(token);
       
-      if(studentInfo){
-        const { student_id, room, block_id } = studentInfo;
+     
+        const { student_id, room, block_id } = userInfo;
 
         
       const { name,  category_id,
@@ -104,37 +121,60 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
             null]
         );
         res.json(newComplaint.rows[0]);
-      }else {
-        res.status(401).json({ message: "Invalid user type or user not found" });
-      }
+      
       } catch (err) {
         console.log(err.message);
       }
 }); 
 
-exports.getAllComplaints = asyncWrapper(async(req, res)=> {
-    try {
-        const allComplaints = await db.pool.query("SELECT * FROM complaint");
-        res.json(allComplaints.rows);
-      } catch (err) {
-        console.log(err.message);
-      }
+// exports.getAllComplaints = asyncWrapper(async(req, res)=> {
+//     try {
+//         const allComplaints = await db.pool.query("SELECT * FROM complaint");
+//         res.json(allComplaints.rows);
+//       } catch (err) {
+//         console.log(err.message);
+//       }
+// });
+
+// exports.getAllComplaintsByid = asyncWrapper(async(req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const myComplaint = await db.pool.query(
+//           "SELECT * FROM complaint WHERE id = $1",
+//           [id]
+//         );
+//         res.json(myComplaint.rows);
+//       } catch (err) {
+//         console.log(err.message);
+//       }
+// });
+
+exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
+  const token = req.headers.authorization;
+  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+  console.log(decodedToken)
+
+  const { user_id, type } = decodedToken.user;
+
+  try {
+
+    if (type === "warden") {
+      const allComplaints = await db.pool.query("SELECT * FROM complaint");
+      res.json(allComplaints.rows);
+    } else if (type === "student") {
+      const myComplaints = await db.pool.query(
+        "SELECT * FROM complaint WHERE student_id = $1",
+        [user_id]
+      );
+      res.json(myComplaints.rows);
+    } else {
+      res.status(403).json({ error: "Unauthorized" });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
-
-exports.getAllComplaintsByid = asyncWrapper(async(req, res) => {
-    try {
-        const { id } = req.params;
-        const myComplaint = await db.pool.query(
-          "SELECT * FROM complaint WHERE id = $1",
-          [id]
-        );
-        res.json(myComplaint.rows);
-      } catch (err) {
-        console.log(err.message);
-      }
-});
-
-
 
 
 

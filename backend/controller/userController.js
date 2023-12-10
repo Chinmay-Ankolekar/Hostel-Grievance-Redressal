@@ -42,14 +42,15 @@ exports.userRegister = asyncWrapper( async (req, res) => {
           [newUser.rows[0].user_id, block_id, usn, room]
         );
       } else if (type === "warden") {
+        const {block_id} = req.body;
         await db.pool.query(
           "INSERT INTO warden (warden_id,block_id) VALUES ($1, $2)",
-          [newUser.rows[0].id, null]
+          [newUser.rows[0].user_id, block_id]
         );
       } else if (type === "worker") {
         await db.pool.query(
           "INSERT INTO worker (worker_id,category_id ) VALUES ($1,$2 )",
-          [newUser.rows[0].id, null]
+          [newUser.rows[0].user_id, null]
         );
       }
      

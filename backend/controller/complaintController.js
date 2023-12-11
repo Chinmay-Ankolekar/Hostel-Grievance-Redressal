@@ -97,25 +97,24 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
       const userInfo = await decodeUser(token);
       
      
-        const { student_id, room, block_id } = userInfo;
+        const { student_id, block_id } = userInfo;
 
         
-      const { name,  category_id,
-        assigned_worker_id, warden_id, 
-       description, is_completed,
+      const { name, 
+       description, room, is_completed,
        assigned_at } = req.body;
 
         const query = `insert into complaint 
-            (name, block_id, category_id,
-            student_id, assigned_worker_id, warden_id, 
+            (name, block_id, 
+            student_id, 
             description, room, is_completed, created_at,
             assigned_at) 
-            values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) returning *` ;
+            values ($1,$2,$3,$4,$5,$6,$7,$8) returning *` ;
 
         const newComplaint = await db.pool.query(
           query,
-          [name, block_id, null,
-            student_id, null, null, 
+          [name, block_id,
+            student_id, 
             description, room, false, new Date().toISOString(),
             null]
         );
@@ -203,18 +202,17 @@ exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
   const token = req.headers.authorization;
   console.log(token);
   const decodedToken = jwt.verify(token, process.env.JWTSECRET);
-  console.log(decodedToken)
+  console.log(decodedToken);
 
   const { user_id, type } = decodedToken.user;
 
   try {
-
     if (type === "warden") {
-      const allComplaints = await db.pool.query("SELECT * FROM complaint");
+      const allComplaints = await db.pool.query("SELECT * FROM complaint ORDER BY created_at DESC");
       res.json(allComplaints.rows);
     } else if (type === "student") {
       const myComplaints = await db.pool.query(
-        "SELECT * FROM complaint WHERE student_id = $1",
+        "SELECT * FROM complaint WHERE student_id = $1 ORDER BY created_at DESC",
         [user_id]
       );
       res.json(myComplaints.rows);
@@ -280,9 +278,3 @@ exports.getUserDetails = async(req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
-
-
-
-
-
-

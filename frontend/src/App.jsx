@@ -5,7 +5,7 @@ import Dashboard from './pages/Dashboard'
 import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
 import { RoutesPathName } from './constants';
 import PrivateRoute from './context/PrivateRoute';
-import AccountPage from './pages/AccountPage'
+// import AccountPage from './pages/AccountPage'
 
 const router = createBrowserRouter([
 	{
@@ -19,12 +19,12 @@ const router = createBrowserRouter([
 				<Login/>
 		),
 	},
-	{
-		path: RoutesPathName.ACCOUNT,
-		element: (
-				<AccountPage/>
-		),
-	},
+	// {
+	// 	path: RoutesPathName.ACCOUNT,
+	// 	element: (
+	// 			<AccountPage/>
+	// 	),
+	// },
 	{
 		path: RoutesPathName.DASHBOARD_PAGE,
 		element: (

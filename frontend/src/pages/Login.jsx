@@ -21,9 +21,9 @@ function Login() {
         if(data.jwtToken) {
           localStorage.setItem("jwtToken", data.jwtToken);
        window.location = "/"
-       }
-       
-        //window.location = "/signup"
+       }else {
+        alert("Invalid credentials. Please check your email and password.");
+      }
     }catch(err) {
         console.log(err.message);
     }

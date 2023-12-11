@@ -33,6 +33,9 @@ function Register() {
        if(data.jwtToken) {
         window.location = "/"
        }
+       else {
+        alert("user already exists")
+       }
        
         //window.location = "/signup"
     }catch(err) {

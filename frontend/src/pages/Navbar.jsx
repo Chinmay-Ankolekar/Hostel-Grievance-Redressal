@@ -72,9 +72,9 @@ function Navbar() {
             <a className="font-medium text-blue-600 sm:py-6" href="/" aria-current="page">
               Landing
             </a>
-            <a className="font-medium text-gray-500 hover:text-gray-400 sm:py-6" href="/account">
+            {/* <a className="font-medium text-gray-500 hover:text-gray-400 sm:py-6" href="/account">
               Account
-            </a>
+            </a> */}
             <button
               type="button"
               className="flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6"

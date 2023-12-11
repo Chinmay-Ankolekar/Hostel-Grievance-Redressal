@@ -86,35 +86,49 @@ create table if not exists warden (
     on delete cascade
 );
 
-create table if not exists category (
-    category_id serial primary key not null,
-    category_name text
-);
-
-create table if not exists workers (
-    worker_id int primary key not null,
-    category_id int,
-    foreign key (worker_id) references users(user_id) on delete cascade,
-    foreign key (category_id) references category(category_id) on delete cascade
-);
-
 create table if not exists complaint (
     id SERIAL PRIMARY KEY,
     name text ,
     block_id int,
-    category_id int ,
     student_id int ,
-    assigned_worker_id int,
-    warden_id int ,
     description text,
     room text,
     is_completed BOOLEAN,
     created_at timestamp,
     assigned_at timestamp,
     foreign key (student_id) references student(student_id) on delete cascade,
-    foreign key (block_id) references block(block_id) on delete cascade,
-    foreign key (assigned_worker_id) references workers(worker_id) on delete cascade,
-    foreign key (category_id) references category(category_id) on delete cascade,
-    foreign key (warden_id) references warden(warden_id) on delete cascade
+    foreign key (block_id) references block(block_id) on delete cascade
 );
+
+-- create table if not exists complaint (
+--     id SERIAL PRIMARY KEY,
+--     name text ,
+--     block_id int,
+--     category_id int ,
+--     student_id int ,
+--     assigned_worker_id int,
+--     warden_id int ,
+--     description text,
+--     room text,
+--     is_completed BOOLEAN,
+--     created_at timestamp,
+--     assigned_at timestamp,
+--     foreign key (student_id) references student(student_id) on delete cascade,
+--     foreign key (block_id) references block(block_id) on delete cascade,
+--     foreign key (assigned_worker_id) references workers(worker_id) on delete cascade,
+--     foreign key (category_id) references category(category_id) on delete cascade,
+--     foreign key (warden_id) references warden(warden_id) on delete cascade
+-- );
+
+-- create table if not exists category (
+--     category_id serial primary key not null,
+--     category_name text
+-- );
+
+-- create table if not exists workers (
+--     worker_id int primary key not null,
+--     category_id int,
+--     foreign key (worker_id) references users(user_id) on delete cascade,
+--     foreign key (category_id) references category(category_id) on delete cascade
+-- );
 

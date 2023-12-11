@@ -14,6 +14,15 @@ const formatTimestamp = (timestamp) => {
   };
   return new Intl.DateTimeFormat("en-US", options).format(date);
 };
+const formatTimestamp1 = (timestamp) => {
+  const date = new Date(timestamp);
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+};
 
 const WardenComplaints = () => {
   const [complaints, setComplaints] = useState([]);
@@ -71,9 +80,9 @@ const WardenComplaints = () => {
     <div key={complaint.complaint_id} className="mt-5 flex flex-col bg-white border border-t-4 border-t-blue-600 shadow-sm rounded-xl">
       <div className="p-4 md:p-5">
         <h3 className="text-xl font-semibold text-gray-800">
-          {complaint.name}
+          {complaint.name}   (Room No. {complaint.room})
         </h3>
-        <p>Created on {formatTimestamp(complaint.created_at)}</p>
+        <p>Created on {formatTimestamp1(complaint.created_at)}</p>
         <p>
   {complaint.assigned_at ? (
     `Completed on ${formatTimestamp(complaint.assigned_at)}`
@@ -83,7 +92,6 @@ const WardenComplaints = () => {
           {complaint.description}
         </p>
        
-
         <div className="flex-shrink-0">
           <button
             type="button"

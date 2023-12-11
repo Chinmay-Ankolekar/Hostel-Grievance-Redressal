@@ -3,7 +3,7 @@ import { GetAuthHeader } from "../utils/Headers";
 import clsx from "clsx";
 
 const formatTimestamp = (timestamp) => {
-  const date = new Date(timestamp);
+  const date = new Date(timestamp ); 
   const options = {
     year: "numeric",
     month: "short",
@@ -15,15 +15,30 @@ const formatTimestamp = (timestamp) => {
   return new Intl.DateTimeFormat("en-US", options).format(date);
 };
 
+const formatTimestamp1 = (timestamp) => {
+  const date = new Date(timestamp ); 
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+};
+
 const ComplaintForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [room, setRoom] = useState("")
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
 
     if (!name || name.trim() === "") {
       alert("Please enter a valid name.");
+      return;
+    }
+    if (!room || room.trim() === "") {
+      alert("Please enter Room No.");
       return;
     }
     if (!description || description.trim() === "") {
@@ -35,7 +50,7 @@ const ComplaintForm = () => {
       console.log(localStorage.getItem("jwtToken"));
       const headers = GetAuthHeader();
       console.log("headers", headers);
-      const body = { name, description };
+      const body = { name, description, room };
       const response = await fetch("http://localhost:3000/complaints", {
         method: "POST",
         headers: headers,
@@ -63,6 +78,9 @@ const ComplaintForm = () => {
       <form onSubmit={onSubmitForm}>
         <div class="mb-4 sm:mb-8">
           <input type="text" id="complaint-name" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Complaint Name "  onChange={(e) => setName(e.target.value)}/>
+        </div>
+        <div class="mb-4 sm:mb-8">
+          <input type="text" id="complaint-name" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter Room.No "  onChange={(e) => setRoom(e.target.value)}/>
         </div>
 
         <div>
@@ -142,7 +160,7 @@ const ComplaintsPage = () => {
         <h3 className="text-xl font-semibold text-gray-800">
           {complaint.name}
         </h3>
-        <p>Created at {formatTimestamp(complaint.created_at)}</p>
+        <p>Created on {formatTimestamp1(complaint.created_at)}</p>
         <p>
   {complaint.assigned_at ? (
     `Completed on ${formatTimestamp(complaint.assigned_at)}`

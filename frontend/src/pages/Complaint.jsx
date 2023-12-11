@@ -100,11 +100,6 @@ const ComplaintsPage = () => {
         }
       );
 
-      if (response.ok) {
-        getComplaints();
-      } else {
-        console.error("Failed to update approval status");
-      }
     } catch (err) {
       console.error(err.message);
     }

@@ -143,9 +143,15 @@ const ComplaintsPage = () => {
           {complaint.name}
         </h3>
         <p>Created at {formatTimestamp(complaint.created_at)}</p>
+        <p>
+  {complaint.assigned_at ? (
+    `Completed on ${formatTimestamp(complaint.assigned_at)}`
+  ) : null}
+</p>
         <p className="mt-5 mb-3 text-gray-500 text-lg">
           {complaint.description}
         </p>
+        
         <div className="flex-shrink-0">
           <button
             type="button"

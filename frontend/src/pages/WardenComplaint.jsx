@@ -2,6 +2,19 @@ import React, { useState, useEffect } from "react";
 import { GetAuthHeader } from "../utils/Headers";
 import clsx from "clsx";
 
+const formatTimestamp = (timestamp) => {
+  const date = new Date(timestamp);
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+};
+
 const WardenComplaints = () => {
   const [complaints, setComplaints] = useState([]);
 
@@ -28,6 +41,7 @@ const WardenComplaints = () => {
       });
      
       console.log(response);
+      window.location="/"
 
     } catch (err) {
       console.error(err.message);
@@ -59,9 +73,17 @@ const WardenComplaints = () => {
         <h3 className="text-xl font-semibold text-gray-800">
           {complaint.name}
         </h3>
+        <p>Created on {formatTimestamp(complaint.created_at)}</p>
+        <p>
+  {complaint.assigned_at ? (
+    `Completed on ${formatTimestamp(complaint.assigned_at)}`
+  ) : null}
+</p>
         <p className="mt-5 mb-3 text-gray-500 text-lg">
           {complaint.description}
         </p>
+       
+
         <div className="flex-shrink-0">
           <button
             type="button"

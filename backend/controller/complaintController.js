@@ -135,39 +135,69 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
 //       }
 // });
 
-exports.putComplaintsByid = asyncWrapper(async(req, res) => {
-  const token = req.headers.authorization;
-  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
-    console.log(decodedToken)
-    const { user_id, type } = decodedToken.user;
-    try {
-      const { id } = req.params;
-      if (type === "warden") {
-        const result = await db.pool.query("UPDATE complaint SET is_completed = NOT is_completed WHERE id = $1 RETURNING *", [id]);
+// exports.putComplaintsByid = asyncWrapper(async(req, res) => {
+//   const token = req.headers.authorization;
+//   const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+//     console.log(decodedToken)
+//     const { user_id, type } = decodedToken.user;
+//     try {
+//       const { id } = req.params;
+//       if (type === "warden") {
+//         const result = await db.pool.query("UPDATE complaint SET is_completed = NOT is_completed WHERE id = $1 RETURNING *", [id]);
 
   
-        if (result.rows.length === 0) {
-          return res.status(404).json({ error: "Complaint not found" });
-        }
+//         if (result.rows.length === 0) {
+//           return res.status(404).json({ error: "Complaint not found" });
+//         }
   
-      // const result = await db.pool.query(
-      //   "UPDATE complaint SET is_completed = $1 WHERE id = $2 RETURNING *",
-      //   [is_completed, id]
-      // );
+//       // const result = await db.pool.query(
+//       //   "UPDATE complaint SET is_completed = $1 WHERE id = $2 RETURNING *",
+//       //   [is_completed, id]
+//       // );
         
-        // const myComplaint = await db.pool.query(
-        //   "SELECT * FROM complaint WHERE id = $1",
-        //   [id]
-        // );
-        // if (result.rows.length > 0) {
-          res.json(result.rows[0]);
-        } else {
-          res.status(404).json({ error: "Complaint not found" });
-        }
-      } catch (err) {
-        console.log(err.message);
+//         // const myComplaint = await db.pool.query(
+//         //   "SELECT * FROM complaint WHERE id = $1",
+//         //   [id]
+//         // );
+//         // if (result.rows.length > 0) {
+//           res.json(result.rows[0]);
+//         } else {
+//           res.status(404).json({ error: "Complaint not found" });
+//         }
+//       } catch (err) {
+//         console.log(err.message);
+//       }
+// });
+
+exports.putComplaintsByid = asyncWrapper(async (req, res) => {
+  const token = req.headers.authorization;
+  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+  console.log(decodedToken);
+  const { user_id, type } = decodedToken.user;
+
+  try {
+    const { id } = req.params;
+
+    if (type === "warden") {
+      const result = await db.pool.query(
+        "UPDATE complaint SET is_completed = NOT is_completed, assigned_at = COALESCE(assigned_at, CURRENT_TIMESTAMP) WHERE id = $1 RETURNING *",
+        [id]
+      );
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: "Complaint not found" });
       }
+
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ error: "Complaint not found" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
+
 
 exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
   const token = req.headers.authorization;

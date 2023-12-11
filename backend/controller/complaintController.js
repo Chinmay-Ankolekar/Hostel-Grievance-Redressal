@@ -213,6 +213,44 @@ exports.getUserType = asyncWrapper(async(req, res)=> {
 }
 })
 
+exports.getUserDetails = async(req, res) => {
+  try{
+    const token = req.headers.authorization;
+    console.log(token);
+    const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+    console.log(decodedToken)
+    const { type } = decodedToken.user;
+    
+    const { id } = req.params;
+
+    console.log('Decoded Token:', decodedToken);
+
+  
+    console.log('User Type:', type);
+
+   
+    console.log('User ID:', id);
+
+    if(type == 'student'){
+      const studentDetails = await db.pool.query(`SELECT u.full_name, u.email, u.phone, s.usn, s.room
+      FROM users u, student s
+      WHERE u.user_id = $1 AND u.user_id = s.student_id`, [id]);
+            res.json(studentDetails.rows)
+    }
+    if (type == 'warden'){
+      const wardenDetails = await db.pool.query(`select u.full_name,u.email,u.phone
+                                                  from users u 
+                                                  where user_id=$1 `, [id]);
+            res.json(wardenDetails.rows);
+    }
+  
+    }  
+   catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 
 
 

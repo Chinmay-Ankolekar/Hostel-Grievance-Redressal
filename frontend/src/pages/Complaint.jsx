@@ -123,6 +123,7 @@ const ComplaintsPage = () => {
   console.log(complaints);
 
   return (
+    <>
     <div className="flex flex-col items-start justify-start min-h-screen gap-x-10">
    
       <h1 className="mt-5 ml-5 mb-5 text-3xl">Complaints</h1>
@@ -156,7 +157,10 @@ const ComplaintsPage = () => {
         </div>
       ))}{" "}
       <ComplaintForm />
+
     </div>
+   
+</>
   );
 };
 

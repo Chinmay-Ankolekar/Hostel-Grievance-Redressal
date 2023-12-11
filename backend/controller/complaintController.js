@@ -135,39 +135,69 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
 //       }
 // });
 
-exports.putComplaintsByid = asyncWrapper(async(req, res) => {
-  const token = req.headers.authorization;
-  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
-    console.log(decodedToken)
-    const { user_id, type } = decodedToken.user;
-    try {
-      const { id } = req.params;
-      if (type === "warden") {
-        const result = await db.pool.query("UPDATE complaint SET is_completed = NOT is_completed WHERE id = $1 RETURNING *", [id]);
+// exports.putComplaintsByid = asyncWrapper(async(req, res) => {
+//   const token = req.headers.authorization;
+//   const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+//     console.log(decodedToken)
+//     const { user_id, type } = decodedToken.user;
+//     try {
+//       const { id } = req.params;
+//       if (type === "warden") {
+//         const result = await db.pool.query("UPDATE complaint SET is_completed = NOT is_completed WHERE id = $1 RETURNING *", [id]);
 
   
-        if (result.rows.length === 0) {
-          return res.status(404).json({ error: "Complaint not found" });
-        }
+//         if (result.rows.length === 0) {
+//           return res.status(404).json({ error: "Complaint not found" });
+//         }
   
-      // const result = await db.pool.query(
-      //   "UPDATE complaint SET is_completed = $1 WHERE id = $2 RETURNING *",
-      //   [is_completed, id]
-      // );
+//       // const result = await db.pool.query(
+//       //   "UPDATE complaint SET is_completed = $1 WHERE id = $2 RETURNING *",
+//       //   [is_completed, id]
+//       // );
         
-        // const myComplaint = await db.pool.query(
-        //   "SELECT * FROM complaint WHERE id = $1",
-        //   [id]
-        // );
-        // if (result.rows.length > 0) {
-          res.json(result.rows[0]);
-        } else {
-          res.status(404).json({ error: "Complaint not found" });
-        }
-      } catch (err) {
-        console.log(err.message);
+//         // const myComplaint = await db.pool.query(
+//         //   "SELECT * FROM complaint WHERE id = $1",
+//         //   [id]
+//         // );
+//         // if (result.rows.length > 0) {
+//           res.json(result.rows[0]);
+//         } else {
+//           res.status(404).json({ error: "Complaint not found" });
+//         }
+//       } catch (err) {
+//         console.log(err.message);
+//       }
+// });
+
+exports.putComplaintsByid = asyncWrapper(async (req, res) => {
+  const token = req.headers.authorization;
+  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+  console.log(decodedToken);
+  const { user_id, type } = decodedToken.user;
+
+  try {
+    const { id } = req.params;
+
+    if (type === "warden") {
+      const result = await db.pool.query(
+        "UPDATE complaint SET is_completed = NOT is_completed, assigned_at = COALESCE(assigned_at, CURRENT_TIMESTAMP) WHERE id = $1 RETURNING *",
+        [id]
+      );
+
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: "Complaint not found" });
       }
+
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ error: "Complaint not found" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
+
 
 exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
   const token = req.headers.authorization;
@@ -212,6 +242,44 @@ exports.getUserType = asyncWrapper(async(req, res)=> {
   res.status(500).json({ error: "Internal Server Error" });
 }
 })
+
+exports.getUserDetails = async(req, res) => {
+  try{
+    const token = req.headers.authorization;
+    console.log(token);
+    const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+    console.log(decodedToken)
+    const { type } = decodedToken.user;
+    
+    const { id } = req.params;
+
+    console.log('Decoded Token:', decodedToken);
+
+  
+    console.log('User Type:', type);
+
+   
+    console.log('User ID:', id);
+
+    if(type == 'student'){
+      const studentDetails = await db.pool.query(`SELECT u.full_name, u.email, u.phone, s.usn, s.room
+      FROM users u, student s
+      WHERE u.user_id = $1 AND u.user_id = s.student_id`, [id]);
+            res.json(studentDetails.rows)
+    }
+    if (type == 'warden'){
+      const wardenDetails = await db.pool.query(`select u.full_name,u.email,u.phone
+                                                  from users u 
+                                                  where user_id=$1 `, [id]);
+            res.json(wardenDetails.rows);
+    }
+  
+    }  
+   catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
 
 
 

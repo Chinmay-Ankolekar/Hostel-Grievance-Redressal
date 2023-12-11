@@ -126,6 +126,7 @@ const ComplaintsPage = () => {
 
   return (
     
+    <>
     <div >
    
 <h1 className="mt-4 ml-4 mb-1 text-2xl font-semibold">Complaints</h1>
@@ -163,7 +164,10 @@ const ComplaintsPage = () => {
 </div>
       )}
          <ComplaintForm />
-       </div>
+   
+    </div>
+   
+</>
   );
 };
 

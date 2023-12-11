@@ -2,6 +2,19 @@ import React, { useState, useEffect } from "react";
 import { GetAuthHeader } from "../utils/Headers";
 import clsx from "clsx";
 
+const formatTimestamp = (timestamp) => {
+  const date = new Date(timestamp);
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+  };
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+};
+
 const ComplaintForm = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -128,6 +141,7 @@ const ComplaintsPage = () => {
         <h3 className="text-xl font-semibold text-gray-800">
           {complaint.name}
         </h3>
+        <p>Created at {formatTimestamp(complaint.created_at)}</p>
         <p className="mt-5 mb-3 text-gray-500 text-lg">
           {complaint.description}
         </p>

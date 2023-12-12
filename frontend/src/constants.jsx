@@ -11,4 +11,4 @@ export const Roles = {
     ACCOUNT : "/account/:user_id"
 }
 
-export const apiLink = "http://localhost:3000"
+//export const apiLink = "http://localhost:3000"

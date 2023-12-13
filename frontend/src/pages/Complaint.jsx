@@ -76,18 +76,19 @@ const ComplaintForm = () => {
     
     <div class="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10">
       <form onSubmit={onSubmitForm}>
-        <div class="mb-4 sm:mb-8">
-          <input type="text" id="complaint-name" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Complaint Name "  onChange={(e) => setName(e.target.value)}/>
-        </div>
-        <div class="mb-4 sm:mb-8">
-          <input type="text" id="complaint-name" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter Room.No "  onChange={(e) => setRoom(e.target.value)}/>
-        </div>
+      <div class="mb-4 sm:mb-8">
+  <input type="text" id="complaint-name" class="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Complaint Name " onChange={(e) => setName(e.target.value)} />
+</div>
+<div class="mb-4 sm:mb-8">
+  <input type="text" id="complaint-name" class="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Enter Room.No " onChange={(e) => setRoom(e.target.value)} />
+</div>
 
-        <div>
-          <div class="mt-1">
-            <textarea id="complaint-description" name="complaint-description" rows="3" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Complaint Description" onChange={(e) => setDescription(e.target.value)} ></textarea>
-          </div>
-        </div>
+<div>
+  <div class="mt-1">
+    <textarea id="complaint-description" name="complaint-description" rows="3" class="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500" placeholder="Complaint Description" onChange={(e) => setDescription(e.target.value)}></textarea>
+  </div>
+</div>
+
 
         <div class="mt-6 grid">
           <button type="submit" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700">

@@ -16,37 +16,8 @@ function Navbar() {
 
     return( 
         <>
-         {/* <nav className="bg-white shadow-md p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-gray-800 text-lg font-semibold">
-          SJCE Boys Hostel
-        </div>
-        <div className="flex items-center space-x-4">
-          <a
-            href="#"
-            className="text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium"
-          >
-            Dashboard
-          </a>
-          <a
-            href="#"
-            className="text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium"
-          >
-            Account
-          </a>
-          <a
-            href="/login"
-            className="text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium"
-            onClick={logout}
-          >
-            Logout
-          </a>
-        </div>
-      </div>
-    </nav> */}
-
-
-<header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0">
+      
+ <header className="flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full bg-white border-b border-gray-200 text-sm py-3 sm:py-0">
       <nav className="relative max-w-7xl w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8" aria-label="Global">
         <div className="flex items-center justify-between">
           <a className="flex-none text-2xl font-semibold "  href="/" aria-label="Brand">
@@ -72,9 +43,7 @@ function Navbar() {
             <a className="font-medium text-blue-600 sm:py-6" href="/" aria-current="page">
               Landing
             </a>
-            {/* <a className="font-medium text-gray-500 hover:text-gray-400 sm:py-6" href="/account">
-              Account
-            </a> */}
+           
             <button
               type="button"
               className="flex items-center gap-x-2 font-medium text-gray-500 hover:text-blue-600 sm:border-s sm:border-gray-300 sm:my-6 sm:ps-6"
@@ -89,6 +58,8 @@ function Navbar() {
         </div>
       </nav>
     </header>
+
+
 
         </>
     )

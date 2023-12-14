@@ -109,7 +109,7 @@ const ComplaintForm = () => {
     <div class="max-w-2xl px-4 lg:pr-24">
       <p class="mb-2 text-blue-600">Hostel Grievance Redressal</p>
       <h3 class="mb-5 text-3xl font-semibold">Submit Your Grievance</h3>
-      <p class="mb-16 text-lg text-gray-600">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur, corrupti asperiores voluptatum labore eligendi quisquam. Id quae, laboriosam saepe facere ea asperiores!</p>
+      <p class="mb-16 text-md text-gray-600">Hostel Grievance Redressal ensures a swift and confidential resolution of student concerns. We guarantee a quick response to submitted complaints, fostering a secure and comfortable living environment for all hostel residents.</p>
       <div class="mb-5 flex font-medium">
         <div class="mr-4">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-7 w-7 text-blue-500">
@@ -118,7 +118,8 @@ const ComplaintForm = () => {
         </div>
         <div class="">
           <p class="mb-2">Swift Grievance Resolution</p>
-          <span class="font-normal text-gray-600">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum porro molestias quaerat maxime modi.</span>
+          <span class="font-normal text-gray-600">
+Swift grievance resolution  prioritizes timely and effective solutions, ensuring students' concerns are promptly addressed and resolved.</span>
         </div>
       </div>
       <div class="mb-5 flex font-medium">
@@ -129,7 +130,7 @@ const ComplaintForm = () => {
         </div>
         <div class="">
           <p class="mb-2">Confidentiality Assured</p>
-          <span class="font-normal text-gray-600">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum porro molestias quaerat maxime modi.</span>
+          <span class="font-normal text-gray-600">Your grievances are handled with utmost confidentiality, ensuring privacy and trust throughout the hostel grievance redressal process .</span>
         </div>
       </div>
       <div class="mb-5 flex font-medium">
@@ -140,7 +141,8 @@ const ComplaintForm = () => {
         </div>
         <div class="">
           <p class="mb-2">Easy Communication</p>
-          <span class="font-normal text-gray-600">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum porro molestias quaerat maxime modi.</span>
+          <span class="font-normal text-gray-600">
+Effortless communication is facilitated, providing a smooth and accessible channel for expressing and resolving grievances within the hostel community.</span>
         </div>
       </div>
     </div>
@@ -150,12 +152,11 @@ const ComplaintForm = () => {
         <p class="text-gray-600">Contact us for hostel grievance redressal</p>
       </div>
       <div class="p-4 sm:p-8">
-        <input id="name" type="text" class="mt-1 w-full resize-y overflow-auto rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none hover:border-blue-500" placeholder="Enter your name" />
-        <input id="email" type="email" class="peer mt-8 w-full resize-y overflow-auto rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none hover:border-blue-500" placeholder="Enter your Room No." />
-        <div class="peer-invalid:block mt-1 hidden text-left text-xs text-rose-600">Email format Incorrect. Please complete the email</div>
+        <input id="name" type="text" class="mt-1 w-full resize-y overflow-auto rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none hover:border-blue-500" placeholder="Enter Complaint name"  onChange={(e) => setName(e.target.value)}/>
+        <input id="email" type="text" class="peer mt-8 w-full resize-y overflow-auto rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none hover:border-blue-500" placeholder="Enter your Room No." onChange={(e) => setRoom(e.target.value)} />
         <label class="mt-5 mb-2 inline-block max-w-full">Tell us about your grievance</label>
-        <textarea id="about" class="mb-8 w-full resize-y overflow-auto rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none hover:border-blue-500"></textarea>
-        <button class="w-full rounded-lg border border-blue-700 bg-blue-700 p-3 text-center font-medium text-white outline-none transition focus:ring hover:border-blue-700 hover:bg-blue-600 hover:text-white">Submit</button>
+        <textarea id="about" class="mb-8 w-full resize-y overflow-auto rounded-lg border border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:outline-none hover:border-blue-500" onChange={(e) => setDescription(e.target.value)} ></textarea>
+        <button class="w-full rounded-lg border border-blue-700 bg-blue-700 p-3 text-center font-medium text-white outline-none transition focus:ring hover:border-blue-700 hover:bg-blue-600 hover:text-white" onClick={onSubmitForm}>Submit</button>
       </div>
     </div>
   </div>
@@ -207,7 +208,7 @@ const ComplaintsPage = () => {
   return (
     
     <>
-   <div className="bg-gray-100 p-4 sm:p-8 md:p-10 h-screen">
+  <div className="bg-gray-100 p-4 sm:p-8 md:p-10 h-screen">
   <h1 className="text-2xl font-bold mb-8">Complaints</h1>
   {complaints.length === 0 ? (
     <p className="ml-4 mt-2 text-gray-600 text-xl">
@@ -224,7 +225,7 @@ const ComplaintsPage = () => {
           <p className="mb-4 text-sm">
             {complaint.assigned_at ? `Completed on ${formatTimestamp(complaint.assigned_at)}` : null}
           </p>
-          <div className="text-md leading-normal text-gray-400 sm:block">
+          <div className="text-md leading-normal text-gray-400 sm:block overflow-hidden" style={{ maxHeight: '100px' }}>
             {complaint.description}
           </div>
           <button
@@ -245,6 +246,7 @@ const ComplaintsPage = () => {
 
   <ComplaintForm />
 </div>
+
 
 
     {/* <div >

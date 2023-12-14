@@ -1,4 +1,4 @@
-# Hostel Grievance Redressal System
+##Hostel Grievance Redressal System
 
 ## Overview
 

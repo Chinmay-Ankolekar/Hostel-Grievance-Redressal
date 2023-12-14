@@ -78,9 +78,7 @@ const WardenComplaints = () => {
     }
   };
 
-  
-
-  console.log(complaints);
+  // console.log(complaints);
 
   return (
 

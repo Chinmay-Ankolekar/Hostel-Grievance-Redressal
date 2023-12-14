@@ -500,7 +500,7 @@ function Register() {
 
             <p className="mb-4 text-center">
               Already have an account?
-              <a href="/login" className="cursor-pointer text-indigo-500 no-underline hover:text-indigo-500"> Create an account </a>
+              <a href="/login" className="cursor-pointer text-indigo-500 no-underline hover:text-indigo-500"> Login </a>
             </p>
           </div>
         </div>

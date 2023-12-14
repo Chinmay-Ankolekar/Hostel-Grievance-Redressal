@@ -290,7 +290,7 @@ exports.deleteComplaints = async(req, res) => {
 
     if(type == 'warden'){
       const deleteComplaint = await db.pool.query(`delete from complaint where id = $1`,[id]);
-      res.json("complaint deleted");
+      // res.json("complaint deleted");
     }
   }catch(err){
     console.log(err.message);

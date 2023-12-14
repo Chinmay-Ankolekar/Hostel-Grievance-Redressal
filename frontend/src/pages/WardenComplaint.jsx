@@ -61,6 +61,23 @@ const WardenComplaints = () => {
     getComplaints();
   }, []);
 
+  const deleteComplaint = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/complaints/${id}`, {
+        method: 'DELETE',
+        headers: GetAuthHeader(),
+      });
+
+      if (response.ok) {
+        setComplaints(complaints.filter(complaint => complaint.id !== id));
+      } else {
+        console.error('Failed to delete complaint');
+      }
+    } catch (error) {
+      console.error('Error deleting complaint:', error);
+    }
+  };
+
   
 
   console.log(complaints);
@@ -130,17 +147,28 @@ const WardenComplaints = () => {
           <div className="text-md leading-normal text-gray-400 sm:block">
             {complaint.description}
           </div>
-          <button
-            className={clsx(
-              "group flex w-1/3 mt-3 cursor-pointer items-center justify-center rounded-md px-4 py-2 text-white transition text-sm",
-              complaint.is_completed ? "bg-green-500" : "bg-red-600"
-            )}
-            onClick={() => handleApproval(complaint.id)}
-          >
-            <span className="group flex w-full items-center justify-center rounded py-1 text-center font-bold">
-              {complaint.is_completed ? "Completed" : "Not Completed"}
-            </span>
-          </button>
+          <div className="flex">
+  <button
+    className={clsx(
+      "group flex w-1/3 mt-3 cursor-pointer items-center justify-center rounded-md px-4 py-2 text-white transition text-sm",
+      complaint.is_completed ? "bg-green-500" : "bg-red-600"
+    )}
+    onClick={() => handleApproval(complaint.id)}
+  >
+    <span className="group flex w-full items-center justify-center rounded py-1 text-center font-bold">
+      {complaint.is_completed ? "Completed" : "Not Completed"}
+    </span>
+  </button>
+
+  <button
+      className="group flex w-1/3 mt-3 ml-3 cursor-pointer items-center justify-center rounded-md px-4 py-2 text-white transition text-sm bg-red-600" onClick={()=>deleteComplaint(complaint.id)}
+    >
+      <span className="group flex w-full items-center justify-center rounded py-1 text-center font-bold">
+        Delete
+      </span>
+    </button>
+</div>
+
         </div>
       ))}
     </div>

@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 
-/* body {
-    background-color: rgb(31 41 55)
-} */
+body {
+    background-color: rgb(243 244 246 );
+}
 
 * {
     font-family: Lato;

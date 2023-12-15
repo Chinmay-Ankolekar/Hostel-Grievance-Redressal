@@ -14,11 +14,19 @@ The Hostel Grievance Redressal System is a web application that facilitates the 
 
 ## Technology Stack
 
-- **Frontend**: Built with React.js for a responsive and dynamic user interface.
+- **Frontend**: Built with React.js for a responsive and dynamic user interface. Styled using Tailwind CSS for a modern look and feel.
 
 - **Backend**: Powered by Node.js and Express.js for server-side development.
 
 - **Database**: Utilizes PostgreSQL for reliable and scalable data storage.
+
+## Styling with Tailwind CSS
+
+The application's UI is styled using Tailwind CSS.
+
+## Component Library
+
+This project utilizes Component Library Preline, ComponentLand for predefined cards, pages, and other components. 
 
 ## Getting Started
 
@@ -41,11 +49,11 @@ To run the Hostel Grievance Redressal System locally:
 
 4. **Configure the database:**
     - Set up PostgreSQL and update the database configuration.
-      For Backend
+    - For backend
       ```bash
       npm start
       ```
-
+  
 5. **Run the application:**
     ```bash
     npm run dev
@@ -53,5 +61,7 @@ To run the Hostel Grievance Redressal System locally:
 
 ## Contributing
 
-Contributions are welcome!
+Contributions are welcome! 
+
+
 

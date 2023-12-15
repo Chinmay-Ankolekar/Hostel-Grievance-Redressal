@@ -247,7 +247,7 @@ exports.getUserDetails = async(req, res) => {
     console.log(token);
     const decodedToken = jwt.verify(token, process.env.JWTSECRET);
     console.log(decodedToken)
-    const { type } = decodedToken.user;
+    const { user_id, type } = decodedToken.user;
     
     const { id } = req.params;
 
@@ -257,18 +257,18 @@ exports.getUserDetails = async(req, res) => {
     console.log('User Type:', type);
 
    
-    console.log('User ID:', id);
+    console.log('User ID:', user_id);
 
     if(type == 'student'){
-      const studentDetails = await db.pool.query(`SELECT u.full_name, u.email, u.phone, s.usn, s.room
-      FROM users u, student s
-      WHERE u.user_id = $1 AND u.user_id = s.student_id`, [id]);
+      const studentDetails = await db.pool.query(`SELECT u.full_name, u.email, u.phone, s.usn, b.block_id, b.block_name, s.room
+      FROM users u, student s, block b
+      WHERE u.user_id = $1 AND u.user_id = s.student_id AND s.block_id = b.block_id` , [user_id]);
             res.json(studentDetails.rows)
     }
     if (type == 'warden'){
       const wardenDetails = await db.pool.query(`select u.full_name,u.email,u.phone
                                                   from users u 
-                                                  where user_id=$1 `, [id]);
+                                                  where user_id=$1 `, [user_id]);
             res.json(wardenDetails.rows);
     }
   

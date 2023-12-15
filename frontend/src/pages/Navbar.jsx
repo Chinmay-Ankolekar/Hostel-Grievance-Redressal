@@ -91,7 +91,7 @@ function Navbar() {
     <>
       <header className="shadow bg-white fixed w-full z-10 top-0">
         <div className="relative flex max-w-screen-xl flex-col overflow-hidden px-4 py-4 md:mx-auto md:flex-row md:items-center">
-          <a href="#" className="flex items-center whitespace-nowrap text-2xl font-black">
+          <a href="/" className="flex items-center whitespace-nowrap text-2xl font-black">
             <span className="text-black">SJCE Boy's Hostel</span>
           </a>
           <input type="checkbox" className="peer hidden" id="navbar-open" />
@@ -107,7 +107,7 @@ function Navbar() {
           >
             <ul className="flex flex-col items-center space-y-2 md:ml-auto md:flex-row md:space-y-0">
               <li className="text-gray-600 md:mr-12 hover:text-blue-600">
-                <a href="/">{userType === "warden" ? "Warden" : "Student"}</a>
+                <a href="/account">Account</a>
               </li>
               <li className="text-gray-600 md:mr-12 hover:text-blue-600">
                 <button

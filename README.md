@@ -50,7 +50,7 @@ This project utilizes Component Library Preline, ComponentLand for predefined ca
 
 ![Student Complaint submission](./images/createComplaint(4).png)
 
-## Student Dashboard after creating complaint
+## Student Dashboard after submitting complaint
 
 ![Student Complaint](./images/studentComplaint(5).png)
 

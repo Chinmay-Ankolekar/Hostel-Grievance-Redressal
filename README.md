@@ -30,39 +30,39 @@ This project utilizes Component Library Preline, ComponentLand for predefined ca
 
 ## Project Preview
 
-## Login Page
+### Login Page
 
 ![Login Page](./images/login(1).png)
 
-## Signup Page
+### Signup Page
 
 ![Signup Page](./images/signup(2).png)
 
-## Student Dashboard
+### Student Dashboard
 
 ![Student Dashboard](./images/studentDashboard(3).png)
 
-## Student Profile Info
+### Student Profile Info
 
 ![Student Profile Info](./images/studentAccountInfo(9).png)
 
-## Student submitting complaint
+### Student submitting complaint
 
 ![Student Complaint submission](./images/createComplaint(4).png)
 
-## Student Dashboard after submitting complaint
+### Student Dashboard after submitting complaint
 
 ![Student Complaint](./images/studentComplaint(5).png)
 
-## Warden Dashboard 
+### Warden Dashboard 
 
 ![Warden Dashboard](./images/wardenDashboard(6).png)
 
-## Warden Resolves complaint(clicking Not completed changes to Completed)
+### Warden Resolves complaint(clicking Not completed changes to Completed)
 
 ![warden Complaint](./images/wardenResolvedComplaint(7).png)
 
-## Student Dashboard Updated
+### Student Dashboard Updated
 
 ![Student Dashboard Updated](./images/studentDashboardUpdated(8).png)
 

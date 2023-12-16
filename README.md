@@ -19,6 +19,9 @@ The Hostel Grievance Redressal System is a web application that facilitates the 
 - **Backend**: Powered by Node.js and Express.js for server-side development.
 
 - **Database**: Utilizes PostgreSQL for reliable and scalable data storage.
+  ### ER Diagram
+  
+  ![Entity Relationship Diagram](./images/hostel database er diagram.png)
 
 ## Styling with Tailwind CSS
 

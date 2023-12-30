@@ -411,16 +411,16 @@ function Register() {
           </svg>
         </div>
 
-        {/* Register */}
+
         <div className="relative flex flex-col sm:w-full md:w-[30rem] lg:w-[30rem] xl:w-[30rem] 2xl:w-[30rem] rounded-lg border-gray-400 bg-white shadow-lg px-4">
           <div className="flex-auto p-6">
-            {/* Logo */}
+     
             <div className="mb-10 flex flex-shrink-0 flex-grow-0 items-center justify-center overflow-hidden">
               <a href="#" className="flex cursor-pointer items-center gap-2 text-indigo-500 no-underline hover:text-indigo-500">
                 <span className="flex-shrink-0 text-3xl font-black  tracking-tight opacity-100">Signup.</span>
               </a>
             </div>
-            {/* /Logo */}
+    
             <h4 className="mb-2 font-medium text-gray-700 xl:text-xl">Welcome!</h4>
             <p className="mb-6 text-gray-500">Please sign-in to access your account</p>
 
@@ -481,7 +481,7 @@ function Register() {
                   </div>
                 </div>
               </div>
-              {/* Add more input fields as needed */}
+
 
               <div className="mb-4">
                 <div className="flex justify-between">
@@ -504,7 +504,7 @@ function Register() {
             </p>
           </div>
         </div>
-        {/* /Register */}
+
       </div>
     </div>
     </>

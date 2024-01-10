@@ -26,7 +26,7 @@ The application's UI is styled using Tailwind CSS.
 
 ## Component Library
 
-This project utilizes Component Library Preline, ComponentLand for predefined cards, pages, and other components. 
+This project utilizes Component Library Preline, ComponentLand for cards, pages, and other components. 
 
 ## Project Preview
 

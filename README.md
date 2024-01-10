@@ -66,7 +66,7 @@ This project utilizes Component Library Preline, ComponentLand for predefined ca
 
 ![Student Dashboard Updated](./images/studentDashboardUpdated(8).png)
 
-### ER Diagram
+### Schema Diagram
   
 ![Entity Relationship Diagram](./images/hostelDatabaseErDiagram.png)
 

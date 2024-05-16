@@ -80,14 +80,6 @@ const workers = `create table if not exists workers (
     foreign key (warden_id) references warden(warden_id) on delete cascade
 );
 `  
-  await pool.query(users);
-  await pool.query(block);
-  await pool.query(student);
-  await pool.query(warden);
-  await pool.query(category);
-  await pool.query(workers);
-  await pool.query(complaint);
- 
 }
 
 module.exports = {

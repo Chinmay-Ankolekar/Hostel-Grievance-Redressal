@@ -93,7 +93,7 @@ To run the Hostel Grievance Redressal System locally:
     - Set up PostgreSQL and update the database configuration.
     - For backend
       ```bash
-      npm start
+      node server.js
       ```
   
 5. **Run the application:**

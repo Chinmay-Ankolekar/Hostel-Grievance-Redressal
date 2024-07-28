@@ -26,7 +26,7 @@ The application's UI is styled using Tailwind CSS.
 
 ## Component Library
 
-This project utilizes Component Library Preline, ComponentLand for predefined cards, pages, and other components. 
+This project utilizes Component Library Preline, ComponentLand for cards, pages, and other components. 
 
 ## Project Preview
 
@@ -66,7 +66,7 @@ This project utilizes Component Library Preline, ComponentLand for predefined ca
 
 ![Student Dashboard Updated](./images/studentDashboardUpdated(8).png)
 
-### ER Diagram
+### Schema Diagram
   
 ![Entity Relationship Diagram](./images/hostelDatabaseErDiagram.png)
 
@@ -93,7 +93,7 @@ To run the Hostel Grievance Redressal System locally:
     - Set up PostgreSQL and update the database configuration.
     - For backend
       ```bash
-      npm start
+      node server.js
       ```
   
 5. **Run the application:**

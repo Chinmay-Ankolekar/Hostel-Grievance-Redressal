@@ -59,7 +59,7 @@ function Register() {
 
   return (
     <>
-      <div className="flex min-h-screen w-screen w-full items-center justify-center text-gray-600 bg-gray-50">
+      <div className="flex min-h-screen w-screen items-center justify-center text-gray-600 bg-gray-50">
         <div className="relative">
           <div className="hidden sm:block h-56 w-56 text-indigo-300 absolute a-z-10 -left-20 -top-20">
             <svg

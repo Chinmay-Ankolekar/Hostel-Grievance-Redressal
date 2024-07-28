@@ -1,8 +1,7 @@
 const express = require('express');
 const wardenRoutes = express.Router()
-
 const {  getWardenByid } = require('../controller/wardenController');
 
-wardenRoutes.route("/warden/:warden_id").get(getWardenByid);
+wardenRoutes.get("/warden/:warden_id",getWardenByid);
 
 module.exports = wardenRoutes

@@ -1,7 +1,6 @@
 export const Roles = {
     WARDEN : 'warden',
-    STUDENT : 'student',
-    WORKER : 'worker'
+    STUDENT : 'student'
 }
 
  export const RoutesPathName = {
@@ -10,5 +9,3 @@ export const Roles = {
     DASHBOARD_PAGE : '/',
     ACCOUNT : "/account"
 }
-
-//export const apiLink = "http://localhost:3000"

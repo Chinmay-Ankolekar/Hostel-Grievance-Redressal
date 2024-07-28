@@ -1,13 +1,11 @@
-import { useState } from 'react'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Dashboard from './pages/Dashboard'
 import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
 import { RoutesPathName } from './constants';
 import PrivateRoute from './context/PrivateRoute';
 import AccountPage from './pages/AccountPage'
 
-const router = createBrowserRouter([
+const routes = createBrowserRouter([
 	{
 		path: RoutesPathName.SIGNUP_PAGE,
 		index: true,
@@ -34,14 +32,7 @@ const router = createBrowserRouter([
      ]);
 
 function App() {
-  
-  return <RouterProvider router={router}/>;
-  
- 
-     {/* <Login/> */}
-     {/* <Register/> */}
-     {/* <Dashboard/> */}
-    
+  return <RouterProvider router={routes}/>;  
 }
 
 export default App

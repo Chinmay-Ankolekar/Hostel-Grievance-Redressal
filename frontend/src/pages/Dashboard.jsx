@@ -1,22 +1,8 @@
-// import Navbar from "./Navbar";
-// import Complaint from "./Complaint";
-// import WardenComplaints from "./WardenComplaint";
-
-// function Dashboard() {
-//     return (
-//         <>
-//          <Navbar/>
-//          <Complaint/>
-//          <WardenComplaints/>
-//         </>
-//     )
-// }
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import Complaint from "./Complaint";
 import WardenComplaints from "./WardenComplaint";
 import { GetAuthHeader } from "../utils/Headers";
-import { Route, Navigate } from 'react-router-dom';
 
 function Dashboard() {
   const [userType, setUserType] = useState(null);

@@ -3,21 +3,15 @@ const cors = require("cors");
 const app = express();
 const db = require("../db");
 const bcrypt = require("bcrypt");
-// const validInfo = require("../middleware/validInfo");
-const asyncWrapper=require('express-async-handler')
 const {jwtGenerator, jwtDecoder} = require("../utils/jwtToken");
-const { authorizeStudent }= require('../middleware/auth')
-const jwt = require("jsonwebtoken");
 app.use(cors());
 app.use(express.json());
 
-exports.userRegister = asyncWrapper( async (req, res) => {
+exports.userRegister =  async (req, res) => {
     const { full_name, email, phone, password, type } = req.body;
 
     try {
-      const user = await db.pool.query("SELECT * FROM users WHERE email = $1", [
-       email
-      ]);
+      const user = await db.pool.query("SELECT * FROM users WHERE email = $1", [email]);
   
       if (user.rows.length > 0) {
         return res.status(401).json("User already exist!");
@@ -31,7 +25,7 @@ exports.userRegister = asyncWrapper( async (req, res) => {
         [full_name, email, phone, bcryptPassword, type]
       );
 
-      const jwtToken = jwtGenerator(newUser.rows[0].id, newUser.rows[0].type);
+      const jwtToken = jwtGenerator(newUser.rows[0].user_id, newUser.rows[0].type);
 
       if (type === "student") {
         const {block_id, usn, room} = req.body;
@@ -46,21 +40,16 @@ exports.userRegister = asyncWrapper( async (req, res) => {
           "INSERT INTO warden (warden_id,block_id) VALUES ($1, $2)",
           [newUser.rows[0].user_id, block_id]
         );
-      } else if (type === "worker") {
-        await db.pool.query(
-          "INSERT INTO worker (worker_id,category_id ) VALUES ($1,$2 )",
-          [newUser.rows[0].user_id, null]
-        );
-      }
-     
+      } 
+      console.log(jwtDecoder(jwtToken))
       return res.json({ jwtToken });
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
     }
-});
+};
 
-exports.userLogin = asyncWrapper( async(req, res)=>{
+exports.userLogin =  async(req, res)=>{
     const { email, password } = req.body;
 
   try {
@@ -74,7 +63,6 @@ exports.userLogin = asyncWrapper( async(req, res)=>{
 
     const validPassword = await bcrypt.compare(
       password,
-
       user.rows[0].password
     );
 
@@ -88,6 +76,6 @@ exports.userLogin = asyncWrapper( async(req, res)=>{
     console.error(err.message);
     res.status(500).send("Server error");
   }
-});
+};
 
 

@@ -2,18 +2,16 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const db = require("../db");
-const asyncWrapper=require('express-async-handler')
 
 const jwt = require("jsonwebtoken");
 const {jwtGenerator, jwtDecoder} = require("../utils/jwtToken");
-const { authorizeStudent }= require('../middleware/auth')
 
 app.use(cors());
 app.use(express.json());
 
 const decodeUser = async (token) => {
   try {
-    const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+    const decodedToken = jwtDecoder(token);
     console.log(decodedToken)
   
     const { user_id, type } = decodedToken.user;
@@ -53,47 +51,18 @@ const decodeUser = async (token) => {
 
   } catch (err) {
     console.error("here111",err.message);
-    // return res.status(401).json({ error: "Unauthorized" });
   }
 };  
 
-// const fetchStudentInfo = async (req, res, next) => {
 
-//   try {
-//     const { user_id, type } = req.userData;
-
-//     if (type === "student") {
-      
-//       const query = `
-//         SELECT student_id, room, block_id
-//         FROM student 
-//         WHERE student_id = $1
-//       `;
-
-//       const result = await db.pool.query(query, [user_id]);
-
-//       if (result.rows.length > 0) {
-//         studentInfo = result.rows[0];
-//       }
-//     }
-
-//     req.studentInfo = studentInfo;
-//     next();
-//   } catch (error) {
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
-
-exports.postComplaints = asyncWrapper(async (req , res)=> {
+exports.postComplaints = async (req , res)=> {
     try {
       const token = req.headers.authorization;
       console.log(token);
       const userInfo = await decodeUser(token);
       
-     
         const { student_id, block_id } = userInfo;
 
-        
       const { name, 
        description, room, is_completed,
        assigned_at } = req.body;
@@ -117,54 +86,11 @@ exports.postComplaints = asyncWrapper(async (req , res)=> {
       } catch (err) {
         console.log(err.message);
       }
-}); 
+}; 
 
-// exports.getAllComplaints = asyncWrapper(async(req, res)=> {
-//     try {
-//         const allComplaints = await db.pool.query("SELECT * FROM complaint");
-//         res.json(allComplaints.rows);
-//       } catch (err) {
-//         console.log(err.message);
-//       }
-// });
-
-// exports.putComplaintsByid = asyncWrapper(async(req, res) => {
-//   const token = req.headers.authorization;
-//   const decodedToken = jwt.verify(token, process.env.JWTSECRET);
-//     console.log(decodedToken)
-//     const { user_id, type } = decodedToken.user;
-//     try {
-//       const { id } = req.params;
-//       if (type === "warden") {
-//         const result = await db.pool.query("UPDATE complaint SET is_completed = NOT is_completed WHERE id = $1 RETURNING *", [id]);
-
-  
-//         if (result.rows.length === 0) {
-//           return res.status(404).json({ error: "Complaint not found" });
-//         }
-  
-//       // const result = await db.pool.query(
-//       //   "UPDATE complaint SET is_completed = $1 WHERE id = $2 RETURNING *",
-//       //   [is_completed, id]
-//       // );
-        
-//         // const myComplaint = await db.pool.query(
-//         //   "SELECT * FROM complaint WHERE id = $1",
-//         //   [id]
-//         // );
-//         // if (result.rows.length > 0) {
-//           res.json(result.rows[0]);
-//         } else {
-//           res.status(404).json({ error: "Complaint not found" });
-//         }
-//       } catch (err) {
-//         console.log(err.message);
-//       }
-// });
-
-exports.putComplaintsByid = asyncWrapper(async (req, res) => {
+exports.putComplaintsByid = async (req, res) => {
   const token = req.headers.authorization;
-  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+  const decodedToken = jwtDecoder(token);
   console.log(decodedToken);
   const { user_id, type } = decodedToken.user;
 
@@ -176,11 +102,6 @@ exports.putComplaintsByid = asyncWrapper(async (req, res) => {
         "UPDATE complaint SET is_completed = NOT is_completed, assigned_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *",
         [id]
       );
-
-      if (result.rows.length === 0) {
-        return res.status(404).json({ error: "Complaint not found" });
-      }
-
       res.json(result.rows[0]);
     } else {
       res.status(404).json({ error: "Complaint not found" });
@@ -189,13 +110,13 @@ exports.putComplaintsByid = asyncWrapper(async (req, res) => {
     console.log(err.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
-});
+};
 
 
-exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
+exports.getAllComplaintsByUser = async (req, res) => {
   const token = req.headers.authorization;
   console.log(token);
-  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+  const decodedToken = jwtDecoder(token);
   console.log(decodedToken);
 
   const { user_id, type } = decodedToken.user;
@@ -217,13 +138,13 @@ exports.getAllComplaintsByUser = asyncWrapper(async (req, res) => {
     console.error(err.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
-});
+};
 
-exports.getUserType = asyncWrapper(async(req, res)=> {
+exports.getUserType = async(req, res)=> {
   try{
   const token = req.headers.authorization;
   console.log(token);
-  const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+  const decodedToken = jwtDecoder(token);
   console.log(decodedToken)
   const { type } = decodedToken.user;
 
@@ -233,17 +154,15 @@ exports.getUserType = asyncWrapper(async(req, res)=> {
   console.error(err.message);
   res.status(500).json({ error: "Internal Server Error" });
 }
-})
+}
 
 exports.getUserDetails = async(req, res) => {
   try{
     const token = req.headers.authorization;
     console.log(token);
-    const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+    const decodedToken = jwtDecoder(token);
     console.log(decodedToken)
     const { user_id, type } = decodedToken.user;
-    
-    const { id } = req.params;
 
     console.log('Decoded Token:', decodedToken);
 
@@ -277,14 +196,14 @@ exports.deleteComplaints = async(req, res) => {
   try {
     const token = req.headers.authorization;
     console.log(token);
-    const decodedToken = jwt.verify(token, process.env.JWTSECRET);
+    const decodedToken = jwtDecoder(token);
     console.log(decodedToken)
     const { type } = decodedToken.user;
     const { id } = req.params;
 
     if(type == 'warden'){
       const deleteComplaint = await db.pool.query(`delete from complaint where id = $1`,[id]);
-      // res.json("complaint deleted");
+      res.json("complaint deleted");
     }
   }catch(err){
     console.log(err.message);

@@ -16,5 +16,7 @@ function jwtDecoder(token){
     return jwt.verify(token, process.env.JWTSECRET);
 }
 
-exports.jwtDecoder = jwtDecoder;
-exports.jwtGenerator = jwtGenerator;
+module.exports = {
+  jwtDecoder,
+  jwtGenerator
+};

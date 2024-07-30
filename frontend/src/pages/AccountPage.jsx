@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../utils/Auth";
 import { Link } from "react-router-dom";
 
 function AccountPage() {
@@ -62,7 +62,6 @@ function AccountPage() {
 
   useEffect(() => {
     getuserDetails();
-    console.log(userName);
   }, []);
 
   return (

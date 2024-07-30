@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../utils/Auth";
 
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp);
@@ -24,7 +24,7 @@ const formatTimestamp1 = (timestamp) => {
 };
 
 const WardenComplaints = () => {
-  const { headers} = useAuth();
+  const { headers } = useAuth();
   const [complaints, setComplaints] = useState([]);
 
   const getComplaints = async (e) => {

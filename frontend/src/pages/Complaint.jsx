@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../context/AuthProvider";
+import { useAuth } from "../utils/Auth";
 
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp);

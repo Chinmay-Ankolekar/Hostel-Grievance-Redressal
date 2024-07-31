@@ -9,7 +9,7 @@ const authorizeWarden = async (req, res, next) => {
     if (decodedToken.user.type === "warden") {
       return next();
     } else {
-     return res.status(403).json({ error: "Unauthorized for warden" });
+     return res.status(403).json({ error: "only warden can access" });
     }
 
   } catch (err) {
